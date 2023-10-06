@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/logerr.css">
+        <style></style>
+        <title></title>
+    </head>
+    <body>
+        <div class="lamp" onclick="toglamp()">
+            <div class="wire"></div>
+            <div id="light" class="light"></div>
+        </div>
+        <main class="screen">
+            <h2><%= err %></h2>
+        </main>
+        <script>
+            const lamplight = document.getElementById("light");
+            let lightstate = true;
+            function toglamp() {
+                if (lightstate) {
+                    lamplight.style.backgroundImage = "linear-gradient(to bottom,#ccccc300 0%,transparent 30%,transparent 100%)";
+                } else {                    
+                    lamplight.style.backgroundImage = "linear-gradient(to bottom,#ccccc3aa 0%,transparent 30%,transparent 100%)";
+                }
+                lightstate = !lightstate;
+            }
+        </script>
+    </body>
+</html>
