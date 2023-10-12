@@ -3,7 +3,7 @@ const fs = require('fs');
 const credfile = __dirname + "/userdata/cred.json";
 const infofile = __dirname + "/userdata/info.json";
 
-function readFiles(filepath,username) {
+function readFiles(filepath,key) {
     let userdata = "";
     try {
         userdata = fs.readFileSync(filepath,"utf-8");
@@ -12,8 +12,8 @@ function readFiles(filepath,username) {
         return null;
     }
     ret = JSON.parse(userdata);
-    if (username) {
-        return ret[username];
+    if (key) {
+        return ret[key];
     }
     return ret;
 }
@@ -60,7 +60,9 @@ function addUser(newUser){
 
 module.exports = {
     searchUser:searchUser,
-    addUser:addUser
+    addUser:addUser,
+    readFiles:readFiles,
+    writeFiles,writeFiles
 };
 // console.log(addUser(
 // {

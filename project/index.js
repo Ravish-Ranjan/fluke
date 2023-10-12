@@ -1,5 +1,6 @@
 const express = require('express');
 const authen = require('./authen.js');
+const fetchmed = require('./fetchmedia.js');
 const bodyParser = require('body-parser');
 const port = 5000;
 
@@ -13,16 +14,15 @@ app.use(bodyParser.json());
 app.set("view engine","ejs")
 
 app.get("/",(req,res) => {
-    res.render(__dirname + "/views/sisu.ejs",{var1 : "ravishranjan"});
+    res.render(__dirname + "/views/sisu.ejs");
 });
 
 app.post("/signin",(req,res) => {
     let form = req.body;
     let result = authen.searchUser(form.username);
-    console.log(result);
     if (result) {
         if (result[2] === form.password) {
-            res.render("homepage.ejs",{name:result[0]})
+            res.render("homepage.ejs",{name:result[0],media:fetchmed.mediaLists()})
         }
         else{
             res.render("logerr.ejs",{err:"Password or Username doesn't match"});

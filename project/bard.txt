@@ -1,0 +1,86 @@
+media part 
+https://g.co/bard/share/82238a21ea61
+
+i have the movies and shows on my machine in therie respectively folders 
+i want to scan those folders and use the scaned data to then send to a api which gives me othe imdb info about the media which then i can use it to show in my ejs
+
+
+
+Sure, here is a step-by-step guide on how to scan your movies and shows folders, use the scanned data to send to an API to get IMDB info, and then show that info in your EJS template:
+
+1. Scan your movies and shows folders
+
+You can use the following Node.js code to scan your movies and shows folders:
+
+JavaScript
+const fs = require('fs');
+
+function scanFolder(folderPath) {
+  const files = fs.readdirSync(folderPath);
+  const movies = [];
+  const shows = [];
+
+  for (const file of files) {
+    const filePath = `${folderPath}/${file}`;
+    const stats = fs.statSync(filePath);
+
+    if (stats.isFile()) {
+      const extension = file.split('.').pop();
+
+      if (extension === 'mp4' || extension === 'mkv') {
+        movies.push(filePath);
+      } else if (extension === 'avi' || extension === 'wmv') {
+        shows.push(filePath);
+      }
+    }
+  }
+
+  return { movies, shows };
+}
+
+const movieAndShowPaths = scanFolder('/path/to/movies-and-shows');
+Use code with caution. Learn more
+2. Use the scanned data to send to an API
+
+Once you have scanned your movies and shows folders, you can use the following Node.js code to send the scanned data to an API to get IMDB info:
+
+JavaScript
+const axios = require('axios');
+
+function getIMDBInfo(movieOrShowPath) {
+  const imdbAPIKey = 'YOUR_IMDB_API_KEY';
+  const imdbURL = `https://api.themoviedb.org/3/search/movie?api_key=${imdbAPIKey}&query=${movieOrShowPath}`;
+
+  return axios.get(imdbURL)
+    .then(response => response.data.results[0]);
+}
+
+const imdbInfoPromises = movieAndShowPaths.movies.map(moviePath => getIMDBInfo(moviePath));
+
+const imdbInfo = await Promise.all(imdbInfoPromises);
+Use code with caution. Learn more
+3. Show the IMDB info in your EJS template
+
+Once you have the IMDB info, you can use it in your EJS template to show it to the user. For example, you could use the following EJS code:
+
+Code snippet
+<% for (const movie of movies) { %>
+  <div class="movie">
+    <h3><%= movie.title %></h3>
+    <img src="<%= movie.poster_path %>" alt="<%= movie.title %> poster">
+    <p><%= movie.overview %></p>
+  </div>
+<% } %>
+Use code with caution. Learn more
+This code will loop through the movies array and display the title, poster, and overview of each movie.
+
+You can use a similar approach to show the IMDB info for shows.
+
+I hope this helps!
+
+
+
+Bard may display inaccurate or offensive information that doesn’t represent Google’s views. Bard Privacy Notice
+
+New document created
+New document created

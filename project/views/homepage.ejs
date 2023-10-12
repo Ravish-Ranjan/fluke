@@ -3,12 +3,54 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/player/.css">
+        <link rel="stylesheet" href="/homepage.css">
+        <script>
+            async function fetchInfo(moviename) {
+                const res = await fetch(`http://www.omdbapi.com/?apikey=e29f9946&t=${moviename}`);
+                const md = await res.json();
+                return md
+            }
+        </script>
         <title>Document</title>
     </head>
     <body>
         <h1>Welcome 
             <%= name %> 
-        </h1>    
+        </h1>
+        <main>
+            <div class="media-sec" id="pg-movies">
+                <script>
+                    var mov = '<%- media["movies"] %>';
+                    let ht = "";
+                    for (let i = 0; i < mov.length; i++) {
+                        let resp;
+                        fetchInfo(mov[i]).then(response => response.json).then(data => {resp = data["Poster"]});
+                        ht += resp;
+                    }
+                    console.log(ht);
+                    document.getElementById("pg-movies").innerHTML = ht;
+                </script>
+            </div>
+            <div class="media-sec" id="pg-shows">
+                <!-- <script>
+                    var sho = '<%- media["shows"] %>';
+                    ht = "";
+                    for (let i = 0; i < sho.length; i++) {
+                        ht += fetchInfo(sho[i]).then(response => response.json).then(data => {data["Poster"]});
+                    }
+                    document.getElementById("pg-shows").innerHTML = ht;
+                </script> -->
+            </div>
+            <div class="media-sec" id="pg-songs">
+                <!-- <script>
+                    var son = '<%- media["songs"] %>';
+                    ht = "";
+                    for (let i = 0; i < son.length; i++) {
+                        ht += fetchInfo(son[i]).then(response => response.json).then(data => {data["Poster"]});
+                    }
+                    document.getElementById("pg-songs").innerHTML = ht;
+                </script> -->
+            </div>
+        </main>
     </body>
 </html>

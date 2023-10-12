@@ -17,7 +17,7 @@ def traverser(fold):
         for subfold in folders:
             res.append(traverser(fold+"/"+subfold))
     locdir = {
-        "root":fold.replace("/","//").replace("\\","//").replace("//","/")+"/",
+        "root":fold.replace("/","//").replace("\\","//").replace("//","/").replace("C:/Users/DELL/OneDrive/Documents/GitHub/fluke/project","")+"/",
         "name":(fold.replace("/","//").replace("\\","//").replace("//","/")+"/").split("/")[-2],
         "files":files,
         "folders":res
