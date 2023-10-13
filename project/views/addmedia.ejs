@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="">
+        <style>
+            body{
+                background-color: #23272e;
+                accent-color: cadetblue;
+                color: white;
+            }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <form action="/addmedia" method="post">
+            <fieldset>
+                <legend>Type of the media</legend>
+                <label for="medmov"><input type="radio" value="movies" name="media-type" id="medmov"> Movie</label>
+                <label for="medsho"><input type="radio" value="shows" name="media-type" id="medsho"> Show</label>
+                <label for="medson"><input type="radio" value="songs" name="media-type" id="medson"> Song</label>
+            </fieldset>
+            <fieldset>
+                <legend>Media File</legend>
+                <label for="medfold">
+                    <input type="file" name="media-fold" id="medfold" webkitdirectory>
+                     Chose the folder of the media
+                </label>
+                <label for="medfil">
+                    <input type="file" name="media-file" id="medfil">
+                     Chose the media
+                </label>
+            </fieldset>
+            <fieldset>
+                <legend>Media Info</legend>
+                <label for="med-lab">Media name : <input type="text" name="media-name" id="med-lab"></label>
+            </fieldset>
+            <input type="submit" value="Add Media">
+        </form>
+        <script></script>
+    </body>
+</html>
