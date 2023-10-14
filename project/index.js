@@ -63,6 +63,7 @@ app.get("/admin@3567",(req,res) => {
 
 app.post("/addmedia",(req,res) => {
     let form = req.body;
+    console.log(form);
     let scan = fetchmed.scandir();
     let addFold;
     for (const type of scan["folders"]) {
