@@ -1,0 +1,26 @@
+[
+    {
+        "filepath": "/public/media/movies/Dictator/flkmeta.json",
+        "rating": "R",
+        "title": "The Dictator",
+        "year": "2012",
+        "poster": "https://m.media-amazon.com/images/M/MV5BNTlkOWYzZDYtNzQ1MS00YTNkLTkyYTItMjBmNjgyMDBlMjI4XkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg",
+        "sublevel": 0
+    },
+    {
+        "filepath": "/public/media/movies/Buried/flkmeta.json",
+        "rating": "R",
+        "title": "Buried",
+        "year": "2010",
+        "poster": "https://m.media-amazon.com/images/M/MV5BMDIxYjU5YTEtNjg1YS00ZDk2LWEzYTYtZDIwMDU1NDRiNzUxXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg",
+        "sublevel": 0
+    },
+    {
+        "filepath": "/public/media/movies/exam/flkmeta.json",
+        "rating": "Not Rated",
+        "title": "Exam",
+        "year": "2009",
+        "poster": "https://m.media-amazon.com/images/M/MV5BNDg2NzM2NzIwNF5BMl5BanBnXkFtZTcwODE2ODc1Mg@@._V1_SX300.jpg",
+        "sublevel": 0
+    }
+]

@@ -5,6 +5,7 @@ const { log } = require('console');
 const keyfile = __dirname + "/apikey.txt";
 const mediafold = __dirname + "/public/media";
 const scanfile = __dirname + "/mediadata/scandir.json";
+const mediaInfo = __dirname + "/mediadata/mediainfo.json";
 
 function getkey() {
     const key = fs.readFileSync(keyfile);
@@ -52,12 +53,42 @@ function getMeta() {
     console.log(metas);
 }
 
-// getMeta();
+function subLevel(date) {
+    const thisdate = new Date();
+    const thatdate = new Date(date);
+    let days = parseInt((thisdate - thatdate) / (1000 * 3600 * 24));
+    if (days <= 60) {
+        return 2;
+    } else if ((days > 60) && (days <= 180)) {
+        return 1;
+    }
+    return 0;
+}
+
+function getShort(info,filepath,type) {
+    let shortInfo = {
+        "filepath":filepath,
+        "type":type,
+        "rating":info["Rated"],
+        "title":info["Title"],
+        "year":info["Year"],
+        "poster":info["Poster"],
+        "sublevel":info["sublevel"]
+    };
+    authen.readFiles(mediaInfo).then(oldData => {
+        oldData.push(shortInfo) ;
+        authen.writeFiles(mediaInfo,oldData);
+    });
+}
+// console.log(subLevel("29 Jul 2024"));
 
 module.exports = {
-    scandir:scandir,
-    fetchInfo,fetchInfo,
-    isSame,isSame
+    scandir,
+    fetchInfo,
+    isSame,
+    getShort,
+    subLevel
 };
+
 
 // fetchInfo("The Dictator").then(data => {console.log(data);});

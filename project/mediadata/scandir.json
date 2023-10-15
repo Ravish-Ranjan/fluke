@@ -9,6 +9,17 @@
             "files": [],
             "folders": [
                 {
+                    "root": "/public/media/movies/Buried/",
+                    "name": "Buried",
+                    "files": [
+                        "Buried.2010.1080p.BluRay.x264.YIFY.mp4",
+                        "Buried.2010.1080p.BluRay.x264.YIFY.mp4.crdownload",
+                        "Buried.2010.1080p.BluRay.x264.YIFY.srt",
+                        "flkmeta.json"
+                    ],
+                    "folders": []
+                },
+                {
                     "root": "/public/media/movies/Dictator/",
                     "name": "Dictator",
                     "files": [
@@ -16,6 +27,15 @@
                         "The.Dictator.2012.1080p.BluRay.x264.YIFY.FULL.srt",
                         "The.Dictator.2012.1080p.BluRay.x264.YIFY.mp4",
                         "The.Dictator.2012.1080p.BluRay.x264.YIFY.srt"
+                    ],
+                    "folders": []
+                },
+                {
+                    "root": "/public/media/movies/exam/",
+                    "name": "exam",
+                    "files": [
+                        "Exam.2009.1080p.BluRay.x264.YIFY.mp4",
+                        "Exam.2009.1080p.BluRay.x265-RARBG.srt"
                     ],
                     "folders": []
                 }

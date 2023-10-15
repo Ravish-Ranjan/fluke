@@ -4,8 +4,6 @@ const fetchmed = require('./fetchmedia.js');
 const bodyParser = require('body-parser');
 const port = 5000;
 
-
-
 app = express();
 app.use(express.json());
 app.use(express.static("public"));
@@ -15,7 +13,9 @@ app.set("view engine","ejs")
 
 
 app.get("/",(req,res) => {
-    res.render(__dirname + "/views/sisu.ejs");
+    authen.readFiles(__dirname + "/mediadata/mediainfo.json").then(data => {
+        res.render("homepage.ejs",{allInfo:JSON.stringify(data),name:" "});
+    });
 });
 
 app.post("/signin",(req,res) => {
@@ -63,27 +63,27 @@ app.get("/admin@3567",(req,res) => {
 
 app.post("/addmedia",(req,res) => {
     let form = req.body;
-    console.log(form);
-    let scan = fetchmed.scandir();
-    let addFold;
-    for (const type of scan["folders"]) {
-        if (type["name"] === form["media-type"]) {
-            for (const fold of type["folders"]) {
-                if (fetchmed.isSame(form["media-fold"],fold["files"]) && (!(fold["files"].includes("flkmeta.json")))) {
-                    addFold = fold["root"];
-                }
-                else{
-                    res.render("logerr.ejs",{err:"Media already exists"});
+    fetchmed.scandir().then(scan => {
+        let addFold;
+        for (const type of scan["folders"]) {
+            if (type["name"] === form["media-type"]) {
+                for (const fold of type["folders"]) {
+                    if (fetchmed.isSame(form["media-fold"],fold["files"]) && (!(fold["files"].includes("flkmeta.json")))) {
+                        addFold = fold["root"];
+                    }
+                    else{
+                        res.render("logerr.ejs",{err:"Media already exists"});
+                    }
                 }
             }
         }
-    }
-
-    let medInfo ;
-    fetchmed.fetchInfo(form["media-name"]).then(data => {
-        data["saved-media-path"] = addFold + form["media-file"];
-        authen.writeFiles(__dirname + addFold + "flkmeta.json",data);
-        res.render("logerr.ejs",{err:"Media added"});
+        fetchmed.fetchInfo(form["media-name"]).then(data => {
+            data["saved-media-path"] = addFold + form["media-file"];
+            data["sublevel"] = fetchmed.subLevel(data["Released"]);
+            authen.writeFiles(__dirname + addFold + "flkmeta.json",data);
+            fetchmed.getShort(data,addFold + "flkmeta.json",form["media--type"]);
+            res.render("logerr.ejs",{err:"Media added"});
+        });
     });
     
 });
