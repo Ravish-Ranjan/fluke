@@ -4,11 +4,25 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/homepage.css">
-        <title>Document</title>
+        <title>Homepage | Fluke</title>
     </head>
     <body>
         <h1>Welcome <%= name %></h1>
-        <div class="slider"></div>
+        <div class="slider">
+            <div id="tab-lt" onclick="slide(0)">⇐</div>
+            <div id="tab-rt" onclick="slide(1)">⇒</div>
+            <div class="slide">
+                <div class="slide-info">
+                    <span class="title">Exam</span>
+                    <div class="subin">
+                        <span>2012</span>
+                        <span>Not Rated</span>
+                        <span>free</span>
+                    </div>
+                </div>
+                <img src="https://m.media-amazon.com/images/M/MV5BNDg2NzM2NzIwNF5BMl5BanBnXkFtZTcwODE2ODc1Mg@@._V1_SX300.jpg" alt="">
+            </div>
+        </div>
         <main>
             <div id="media" class="media"></div>
             <div class="media-sec" id="pg-movies">
@@ -16,7 +30,7 @@
                     var mov = JSON.parse('<%- allInfo %>');
                     let ht = '';
                     for (const media of mov) {
-                        ht += `<div class="media-tile">
+                        ht += `<a href=/player?filepath=${media["filepath"]} class="media-tile">
                                     <img src=${media["poster"]} alt="">
                                     <div class="media-info">
                                         <span class="title">Title : ${media["title"]}</span>
@@ -25,7 +39,7 @@
                                             <span>${media["rating"]}</span>
                                         </div>
                                     </div>
-                                </div>`;
+                                </a>`;
                     }
                     document.getElementById("media").innerHTML = ht;
                 </script>

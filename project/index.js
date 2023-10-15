@@ -88,6 +88,13 @@ app.post("/addmedia",(req,res) => {
     
 });
 
+app.get("/player",(req,res) => {
+    let filepath = req.query["filepath"];
+    authen.readFiles(__dirname + filepath).then(data => {
+        res.render("player.ejs",{data:JSON.stringify(data)});
+    });
+});
+
 app.listen(port,() => {
     console.log(`server at http://127.0.0.1:${port}/`);
 });
