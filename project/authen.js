@@ -27,40 +27,7 @@ function writeFiles(filepath,data) {
     }
     return true;
 }
-
-function searchUser(username) {
-    let retcr = readFiles(credfile,username);
-    if (retcr) {
-        ret = readFiles(infofile,username);
-        return [ret[0],ret[1],retcr];
-    }
-    return false;
-}
-
-function addUser(newUser){
-    let check = searchUser(newUser.username);
-    if (check) {
-        return 1;
-    }
-    try {
-        let udInfo = readFiles(infofile);
-        udInfo[newUser.username] = [newUser.name,newUser.email];
-        let inchk = writeFiles(infofile,udInfo);
-        let udCred = readFiles(credfile);
-        udCred[newUser.username] = newUser.passwd;
-        let crchk = writeFiles(credfile,udCred);
-        if ((crchk)&&(inchk)) {
-            return true;
-        }
-        return 3;
-    } catch (err) {
-        return 2;
-    }
-}
-
 module.exports = {
-    searchUser:searchUser,
-    addUser:addUser,
     readFiles:readFiles,
     writeFiles:writeFiles
 };

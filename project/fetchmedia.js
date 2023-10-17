@@ -48,11 +48,6 @@ function isSame(arr1,arr2) {
     }
 }
 
-function getMeta() {
-    let metas = fs.readdirSync(mediafold);
-    console.log(metas);
-}
-
 function subLevel(date) {
     const thisdate = new Date();
     const thatdate = new Date(date);
@@ -65,9 +60,9 @@ function subLevel(date) {
     return 0;
 }
 
-function getShort(info,filepath,type) {
+function getShort(info,full_id,type) {
     let shortInfo = {
-        "filepath":filepath,
+        "full_id":full_id,
         "type":type,
         "rating":info["Rated"],
         "title":info["Title"],
@@ -75,10 +70,7 @@ function getShort(info,filepath,type) {
         "poster":info["Poster"],
         "sublevel":info["sublevel"]
     };
-    authen.readFiles(mediaInfo).then(oldData => {
-        oldData.push(shortInfo) ;
-        authen.writeFiles(mediaInfo,oldData);
-    });
+    return shortInfo;
 }
 // console.log(subLevel("29 Jul 2024"));
 

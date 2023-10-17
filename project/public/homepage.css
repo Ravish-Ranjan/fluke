@@ -17,6 +17,9 @@ body{
     gap: 1rem;
     background-color: #23272e;
 }
+body::-webkit-scrollbar{
+    width: 0;
+}
 h1{
     width: 100%;
     padding: 1%;
@@ -103,11 +106,11 @@ main{
 }
 #tab-lt{
     left: 0;
-    background-image: linear-gradient(to right,#23272eff,#23272e88,transparent);
+    background-image: linear-gradient(to right,#48515f 0,#48515f 40%,transparent);
 }
 #tab-rt{
     right: 0;
-    background-image: linear-gradient(to right,transparent,#23272e88,#23272eff);
+    background-image: linear-gradient(to right,transparent,#48515f 60%,#48515f 100%);
 }
 .slide{
     width: 100%;
@@ -115,25 +118,30 @@ main{
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-.slide img{
-    width: 45%;
-    object-fit: cover;
+    background-size: 60% auto;
+    background-repeat: no-repeat;
+    background-position: 100% 0%;
+    
 }
 .slide-info{
-    margin: 0 0 0 10%;
+    width: 100%;
     height: 100%;
+    background-image: linear-gradient(to right,#23272e 0,#23272e 50%,transparent);
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    color: azure;
+    justify-content: center;
+    align-items: flex-start;
+    color: white;
+    gap: 3rem;
 }
-.slide-info .title{
-    font-size: 80px;
+.slide-info>.title{
+    margin-left: 15%;
+    font-size: 60px;
 }
-.slide-info .subin{
-    display: flex;
-    flex-direction: column;
-    font-size: 20px;
+.slide-info>.subin{
+    margin-left: 15%;
     color: #aaa;
+    width: 15%;
+    display: flex;
+    justify-content: space-between;
 }

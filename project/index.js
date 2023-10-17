@@ -1,8 +1,11 @@
 const express = require('express');
 const authen = require('./authen.js');
+const { conDb,getDb } = require("./db.js")
 const fetchmed = require('./fetchmedia.js');
 const bodyParser = require('body-parser');
+const { ObjectId } = require('mongodb');
 const port = 5000;
+let db;
 
 app = express();
 app.use(express.json());
@@ -13,8 +16,15 @@ app.set("view engine","ejs")
 
 
 app.get("/",(req,res) => {
-    authen.readFiles(__dirname + "/mediadata/mediainfo.json").then(data => {
+    let data = [];
+    db.collection("quick_info").find().sort({sublevel:1})
+    .forEach(doc => data.push(doc))
+    .then(() => {
+        // res.json(data)
         res.render("homepage.ejs",{allInfo:JSON.stringify(data),name:" "});
+    })
+    .catch(() => {
+        res.json({"err":"fetching error"})
     });
 });
 
@@ -63,38 +73,47 @@ app.get("/admin@3567",(req,res) => {
 
 app.post("/addmedia",(req,res) => {
     let form = req.body;
-    fetchmed.scandir().then(scan => {
-        let addFold;
-        for (const type of scan["folders"]) {
-            if (type["name"] === form["media-type"]) {
-                for (const fold of type["folders"]) {
-                    if (fetchmed.isSame(form["media-fold"],fold["files"]) && (!(fold["files"].includes("flkmeta.json")))) {
-                        addFold = fold["root"];
-                    }
-                    else{
-                        res.render("logerr.ejs",{err:"Media already exists"});
+    let adfold = "";
+    let med_id;
+    fetchmed.scandir().then(medfold => {
+        for (const typefold of medfold["folders"]) {
+            if (typefold["name"] === form["media-type"]) {
+                for (const medfile of typefold["folders"]) {
+                    if (fetchmed.isSame(medfile["files"],form["media-fold"])) {
+                        adfold = medfile["root"];
                     }
                 }
             }
         }
-        fetchmed.fetchInfo(form["media-name"]).then(data => {
-            data["saved-media-path"] = addFold + form["media-file"];
-            data["sublevel"] = fetchmed.subLevel(data["Released"]);
-            authen.writeFiles(__dirname + addFold + "flkmeta.json",data);
-            fetchmed.getShort(data,addFold + "flkmeta.json",form["media--type"]);
-            res.render("logerr.ejs",{err:"Media added"});
+        fetchmed.fetchInfo(form["media-name"]).then(async data => {
+            data["foldpath"] = adfold;
+            data["filepath"] = form["media-fold"];
+            data["sublevel"] = parseInt(fetchmed.subLevel(data["Released"]));
+
+            const mef_if = await db.collection("media_info").insertOne(data);
+            const mef_if_id = mef_if.insertedId;
+
+            let shortInfo = fetchmed.getShort(data, mef_if_id,form["media-type"]);
+            const sh_if = await db.collection("quick_info").insertOne(shortInfo);
+            res.render("logerr.ejs",{err:"media-added"})
         });
-    });
-    
+    })
 });
 
-app.get("/player",(req,res) => {
-    let filepath = req.query["filepath"];
-    authen.readFiles(__dirname + filepath).then(data => {
-        res.render("player.ejs",{data:JSON.stringify(data)});
-    });
+app.get("/player",async (req,res) => {
+    let fid = req.query["fid"].toString();
+    let fdoc = await db.collection("media_info").findOne({_id:new ObjectId(fid)});
+    res.render("player.ejs",{data:JSON.stringify(fdoc)});
 });
 
-app.listen(port,() => {
-    console.log(`server at http://127.0.0.1:${port}/`);
-});
+conDb((err) => {
+    if (!err) {
+        app.listen(port,() => {
+            console.log("Database connected...");
+            console.log(`Server starting at http://127.0.0.1:${port}/`);
+        });
+        db = getDb();
+    }else{
+        console.log("Error conneecting to the database !");
+    }
+})
