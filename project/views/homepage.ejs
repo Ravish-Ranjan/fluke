@@ -9,25 +9,15 @@
     </head>
     <body>
         <h1>Welcome <%= name %></h1>
-        <div class="slider">
-            <div id="tab-lt" onclick="slide(0)">⇐</div>
-            <div id="tab-rt" onclick="slide(1)">⇒</div>
-            <div class="slide" style="background-image: url('https://m.media-amazon.com/images/M/MV5BNDg2NzM2NzIwNF5BMl5BanBnXkFtZTcwODE2ODc1Mg@@._V1_SX300.jpg');">
-                <div class="slide-info">
-                    <span class="title">Exam</span>
-                    <div class="subin">
-                        <span>2012</span>●
-                        <span>Not Rated</span>●
-                        <span>free</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="slider" id="slider"></div>
         <main>
             <div id="media" class="media"></div>
             <div class="media-sec" id="pg-movies">
                 <script>
-                    var mov = JSON.parse('<%- allInfo %>');
+                    const sublevels = ["Free","With Subscription","With Pro-Subscription"];
+                    const slider = document.getElementById("slider");
+                    let allInfo = `<%- allInfo.replace(/'/g, "\\'") %>`;
+                    var mov = JSON.parse(allInfo);
                     let ht = '';
                     for (const media of mov) {
                         ht += `<a href=/player?fid=${media["full_id"]} class="media-tile">
@@ -42,6 +32,43 @@
                                 </a>`;
                     }
                     document.getElementById("media").innerHTML = ht;
+                    ht = '<div id="tab-lt" onclick="golt()">⇐</div><div id="tab-rt" onclick="gort()">⇒</div>';
+                    for (const media of mov) {
+                        ht += `<div class="slide" style="background-image: url(${media["poster"]});">
+                                    <div class="slide-info">
+                                        <span class="title">${media["title"]}</span>
+                                        <div class="subin">
+                                            <span>${media["year"]}}</span>●
+                                            <span>Rating : ${media["rating"]}</span>●
+                                            <span>${sublevels[media["sublevel"]]}</span>
+                                        </div>
+                                        <span class="description">${media["plot"].substring(0,200)}...</span>
+                                    </div>
+                                </div>`;
+                    }
+                    slider.innerHTML = ht;
+                    const ltbar = document.getElementById("tab-lt");
+                    const rtbar = document.getElementById("tab-rt");
+                    let slide_pointer=2;
+                    let slides = slider.childNodes.length;
+                    function gort() {
+                        slide_pointer++;
+                        if (slide_pointer > slides) {
+                            slide_pointer = slides
+                        }
+                        slider.childNodes[slide_pointer].scrollIntoView();
+                        ltbar.style.left = `${((slide_pointer-2)*100)-1}%`;
+                        rtbar.style.right = `${(slide_pointer-2)*100}`;
+                    }
+                    function golt() {
+                        slide_pointer--;
+                        if (slide_pointer < 2) {
+                            slide_pointer = 2
+                        }
+                        slider.childNodes[slide_pointer].scrollIntoView();
+                        ltbar.style.left = `${((slide_pointer-2)*100)-1}%`;
+                        rtbar.style.right = `${(slide_pointer-2)*100}`;
+                    }
                 </script>
             </div>
         </main>

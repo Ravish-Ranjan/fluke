@@ -68,10 +68,12 @@ function getShort(info,full_id,type) {
         "title":info["Title"],
         "year":info["Year"],
         "poster":info["Poster"],
-        "sublevel":info["sublevel"]
+        "sublevel":info["sublevel"],
+        "plot":info["Plot"]
     };
     return shortInfo;
 }
+
 // console.log(subLevel("29 Jul 2024"));
 
 module.exports = {

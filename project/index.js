@@ -74,7 +74,6 @@ app.get("/admin@3567",(req,res) => {
 app.post("/addmedia",(req,res) => {
     let form = req.body;
     let adfold = "";
-    let med_id;
     fetchmed.scandir().then(medfold => {
         for (const typefold of medfold["folders"]) {
             if (typefold["name"] === form["media-type"]) {
@@ -89,7 +88,6 @@ app.post("/addmedia",(req,res) => {
             data["foldpath"] = adfold;
             data["filepath"] = form["media-fold"];
             data["sublevel"] = parseInt(fetchmed.subLevel(data["Released"]));
-
             const mef_if = await db.collection("media_info").insertOne(data);
             const mef_if_id = mef_if.insertedId;
 
