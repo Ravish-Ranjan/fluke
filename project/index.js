@@ -17,7 +17,7 @@ app.set("view engine","ejs")
 
 app.get("/",(req,res) => {
     let data = [];
-    db.collection("quick_info").find().sort({sublevel:1})
+    db.collection("quick_info").find().sort({Year:1})
     .forEach(doc => data.push(doc))
     .then(() => {
         // res.json(data)

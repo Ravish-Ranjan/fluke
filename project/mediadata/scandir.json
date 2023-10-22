@@ -9,6 +9,40 @@
             "files": [],
             "folders": [
                 {
+                    "root": "/public/media/movies/12 Angry Men/",
+                    "name": "12 Angry Men",
+                    "files": [
+                        "12.Angry.Men.1957.720p.BRrip.x264.YIFY.mp4",
+                        "12.Angry.Men.1957.720p.BRrip.x264.YIFY.srt",
+                        "Thumbs.db"
+                    ],
+                    "folders": []
+                },
+                {
+                    "root": "/public/media/movies/8 mile/",
+                    "name": "8 mile",
+                    "files": [
+                        "8 mile.mkv"
+                    ],
+                    "folders": []
+                },
+                {
+                    "root": "/public/media/movies/American psycho/",
+                    "name": "American psycho",
+                    "files": [
+                        "american psycho.mp4"
+                    ],
+                    "folders": []
+                },
+                {
+                    "root": "/public/media/movies/ant man and the wasp quantumania/",
+                    "name": "ant man and the wasp quantumania",
+                    "files": [
+                        "Ant Man and the Wasp Quantumania.mp4"
+                    ],
+                    "folders": []
+                },
+                {
                     "root": "/public/media/movies/Buried/",
                     "name": "Buried",
                     "files": [
@@ -34,6 +68,72 @@
                     "files": [
                         "Exam.2009.1080p.BluRay.x264.YIFY.mp4",
                         "Exam.2009.1080p.BluRay.x265-RARBG.srt"
+                    ],
+                    "folders": []
+                },
+                {
+                    "root": "/public/media/movies/john wick 1/",
+                    "name": "john wick 1",
+                    "files": [
+                        "john wick 1.mkv"
+                    ],
+                    "folders": []
+                },
+                {
+                    "root": "/public/media/movies/Phone Booth/",
+                    "name": "Phone Booth",
+                    "files": [
+                        "Phone.Booth.2002.720p.BrRip.x264.YIFY.mp4",
+                        "Phone.Booth.2002.720p.BrRip.x264.YIFY.srt",
+                        "Thumbs.db"
+                    ],
+                    "folders": []
+                },
+                {
+                    "root": "/public/media/movies/pirates of the caribbean 1/",
+                    "name": "pirates of the caribbean 1",
+                    "files": [
+                        "Pirates of the Caribbean-1-The Curse of the Black Pearl.mkv"
+                    ],
+                    "folders": []
+                },
+                {
+                    "root": "/public/media/movies/pirates of the caribbean 2/",
+                    "name": "pirates of the caribbean 2",
+                    "files": [
+                        "Pirates of the Caribbean-2-Dead Man's Chest.mkv"
+                    ],
+                    "folders": []
+                },
+                {
+                    "root": "/public/media/movies/pirates of the caribbean 3/",
+                    "name": "pirates of the caribbean 3",
+                    "files": [
+                        "Pirates of the Caribbean-3-At World's End.mkv"
+                    ],
+                    "folders": []
+                },
+                {
+                    "root": "/public/media/movies/pirates of the caribbean 4/",
+                    "name": "pirates of the caribbean 4",
+                    "files": [
+                        "Pirates of the Caribbean-4-On Stranger Tides.mkv"
+                    ],
+                    "folders": []
+                },
+                {
+                    "root": "/public/media/movies/pirates of the caribbean 5/",
+                    "name": "pirates of the caribbean 5",
+                    "files": [
+                        "Pirates of the Caribbean-5-Dead Men Tell No Tales.mkv"
+                    ],
+                    "folders": []
+                },
+                {
+                    "root": "/public/media/movies/The hatefull eight/",
+                    "name": "The hatefull eight",
+                    "files": [
+                        "The.Hateful.Eight.2015.1080p.BluRay.x264-[YTS.AG].mp4"
                     ],
                     "folders": []
                 }
