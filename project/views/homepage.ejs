@@ -27,9 +27,9 @@
                                     <img src=${media["poster"]} alt="movie poster">
                                     <div class="media-info">
                                         <span class="title">${media["title"]}</span>
-                                        <div>
-                                            <a href=/player?fid=${media["full_id"]}>Play</a>
-                                            <button></butt
+                                        <div class="controls">
+                                            <a title="play media" href=/player?fid=${media["full_id"]}><img src="play.svg" alt="play button"></a>
+                                            <button title="add to watchlist" onclick="addwatch(${media["full_id"]})"><img src="list.svg" alt="list"></button>
                                         </div>
                                         <div class="desc">
                                             <span>${media["year"]}</span>&nbsp;●&nbsp;

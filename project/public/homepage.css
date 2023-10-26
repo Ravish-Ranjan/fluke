@@ -9,6 +9,9 @@
     font-family: android;
     src: url("/Roboto-Medium.ttf");
 }
+a,button{
+    cursor: pointer;
+}
 body{
     display: flex;
     flex-direction: column;
@@ -45,18 +48,18 @@ main{
 .media{
     width: 98%;
     /* height: 50vh; */
+    padding-left: 2%;
     display: flex;
-    flex-direction: row;
-    overflow-x: scroll;
+    overflow-x: auto;
     gap: 1rem;
-    /* justify-content: flex-start; */
-    /* align-items: center; */
+    justify-content: flex-start;
+    align-items: center;
 }
 .media-tile{
     height: 48vh;
     aspect-ratio: 3/4;
-    display: flex;
     padding: 0.5%;
+    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -72,7 +75,7 @@ main{
 .media-tile:hover .media-info{
     height: 40%;
 }
-.media-tile:hover .media-info a{
+.media-tile:hover .media-info .controls{
     height: 30%;
 }
 .media-tile:hover{
@@ -111,17 +114,23 @@ main{
     overflow: hidden;
     transition: 0.25s ease-in-out;
 }
-.media-info a{
+.media-info .controls{
     height: 0;
     overflow: hidden;
-    color: white;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    transition: 0.25s ease-in-out;
+    background-color: #ffffff11;
+}
+.controls a{
     text-decoration: none;
     font-size: 0.75em;
-    width: 100%;
-    background-color: #6b6b6b;
-    display: grid;
-    place-items: center;
-    transition: 0.25s ease-in-out;
+}
+.controls button{
+    background-color: transparent;
+    border: none;
 }
 .media-info .desc{
     font-size: 0.75em;
@@ -247,7 +256,7 @@ main{
     border: 4px none #ffffff;
   }
 .media::-webkit-scrollbar{
-    height: 0;
+    height: 0px;
 }
 .slider::-webkit-scrollbar{
     height: 0px;

@@ -1,4 +1,5 @@
 const express = require('express');
+const coopar = require('cookie-parser');
 const authen = require('./authen.js');
 const { conDb,getDb } = require("./db.js")
 const fetchmed = require('./fetchmedia.js');
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+app.use(coopar());
 app.set("view engine","ejs")
 
 
@@ -33,6 +35,8 @@ app.post("/signin",(req,res) => {
     let result = authen.searchUser(form.username);
     if (result) {
         if (result[2] === form.password) {
+            res.cookie()
+            
             res.render("homepage.ejs",{name:result[0]})
         }
         else{
