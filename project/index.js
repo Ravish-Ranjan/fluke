@@ -1,10 +1,10 @@
 const express = require('express');
-const coopar = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const authen = require('./authen.js');
 const { conDb,getDb } = require("./db.js")
 const fetchmed = require('./fetchmedia.js');
 const bodyParser = require('body-parser');
-const { ObjectId } = require('mongodb');
+const { ObjectId, Admin } = require('mongodb');
 const port = 5000;
 let db;
 
@@ -13,62 +13,30 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-app.use(coopar());
+app.use(cookieParser());
 app.set("view engine","ejs")
 
 
 app.get("/",(req,res) => {
+    let user = req.cookies.uid;
+    let usein = {};
+    if (user) {
+        authen.getUserById(db,user).then(data => {
+            usein = data;
+        });
+        if (!(usein["found"])) {
+            usein = {};
+        }
+    }
     let data = [];
     db.collection("quick_info").find().sort({Year:1})
     .forEach(doc => data.push(doc))
     .then(() => {
-        // res.json(data)
-        res.render("homepage.ejs",{allInfo:JSON.stringify(data),name:" "});
+        res.render("homepage.ejs",{allInfo:JSON.stringify(data),userinfo:JSON.stringify(usein)});
     })
     .catch(() => {
         res.json({"err":"fetching error"})
     });
-});
-
-app.post("/signin",(req,res) => {
-    let form = req.body;
-    let result = authen.searchUser(form.username);
-    if (result) {
-        if (result[2] === form.password) {
-            res.cookie()
-            
-            res.render("homepage.ejs",{name:result[0]})
-        }
-        else{
-            res.render("logerr.ejs",{err:"Password or Username doesn't match"});
-        }
-    } else {
-        res.render("logerr.ejs",{err:"No such user found"})
-    }
-});
-
-app.post("/signup",(req,res) => {
-    let form = req.body;
-    if (form.createpasswd !== form.confirmpasswd) {
-        res.render("logerr.ejs",{err:"Create password and confirm password field doesn't match"});
-    }
-    else{
-        let result = authen.addUser({
-            username:form.newusername,
-            name:form.fullname,
-            email:form.email,
-            passwd:form.createpasswd
-        });
-        if (result === true) {
-            res.render("homepage.ejs",{name:form.fullname});
-        } else if (result === 1) {
-            res.render(__dirname + "logerr",{err:"User alredy exists"});
-        } else if (result === 2) {
-            res.render(__dirname + "logerr",{err:"Invalid Input"});
-        } else if (result === 3) {
-            res.render(__dirname + "logerr",{err:"Error While adding user"});
-        }
-    }
 });
 
 app.get("/admin@3567",(req,res) => {
@@ -100,6 +68,30 @@ app.post("/addmedia",(req,res) => {
             res.render("logerr.ejs",{err:"media-added"})
         });
     })
+});
+
+app.post("/signin",(req,res) => {
+    let form = req.body;
+    authen.getUserByUserName(db,form["username"]).then(data => {
+        if (data["found"]) {
+            res.cookie("uid",data["_id"]);
+            res.status(200);
+            res.redirect("/")
+        } else {
+            res.status(202).json();
+        }
+    });
+});
+
+app.post("/signup",(req,res) => {
+    let form = req.body;
+    authen.getUserByUserName(db,form["newusername"]).then(data => {
+        
+    });
+});
+
+app.get("/getsignin",(req,res) => {
+    res.render("sisu.ejs");
 });
 
 app.get("/player",async (req,res) => {

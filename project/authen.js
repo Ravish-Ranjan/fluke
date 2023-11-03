@@ -1,41 +1,27 @@
-const fs = require('fs');
+const { ObjectId } = require("mongodb");
 
-const credfile = __dirname + "/userdata/cred.json";
-const infofile = __dirname + "/userdata/info.json";
-
-async function readFiles(filepath,key) {
-    let userdata = "";
-    try {
-        userdata = await fs.readFileSync(filepath,"utf-8");
-    } catch (err) {
-        console.log(err);
-        return null;
-    }
-    ret = JSON.parse(userdata);
-    if (key) {
-        return ret[key];
-    }
-    return ret;
+async function addUser(db,form) {
+    
 }
 
-function writeFiles(filepath,data) {
-    try {
-        fs.writeFileSync(filepath,JSON.stringify(data,null,4));
-    } catch (err) {
-        console.log(err);
-        return false;
+async function getUserByUserName(db,username) {
+    let userdoc = await db.collection("user_info").findOne({username : username});
+    if (!userdoc) {
+        return {"found":false}
     }
-    return true;
+    return {_id:userdoc["_id"].toString(),"found":true};
 }
+
+async function getUserById(db,user) {
+    let userdoc = await db.collection("user_info").findOne({_id : new ObjectId(user.toString())});
+    if (!userdoc){
+        return {"found":false};
+    }
+    return {username : userdoc["username"],name : userdoc["name"],"found":true};
+}
+
 module.exports = {
-    readFiles:readFiles,
-    writeFiles:writeFiles
+    getUserById:getUserById,
+    addUser:addUser,
+    getUserByUserName,getUserByUserName
 };
-// console.log(addUser(
-// {
-//     username:"_ravishranjan_",
-//     name:"Ranjan Ravish",
-//         email:"test2@gmail.com",
-//         passwd:"qwerty"
-//     }
-// ));

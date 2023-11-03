@@ -1,2 +1,2 @@
-/node_modules
-/public/media/movie
+node_modules
+\media

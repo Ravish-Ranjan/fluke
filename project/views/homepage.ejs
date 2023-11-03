@@ -5,11 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/homepage.css">
         <link rel="shortcut icon" href="/logo-small.svg" type="image/x-icon">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script differ src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <title>Homepage | Fluke</title>
     </head>
     <body>
-        <h1>Welcome <%= name %></h1>
+        <header>
+          <span id="greet"></span>
+          <div class="nav">
+            <input type="search" oninput="srchIt()" onclick="op()" placeholder="Search Media" name="search" id="srch">
+            <ul id="srchbox" class="srchbox"></ul>
+            <img src="https://api.iconify.design/material-symbols:cancel-outline-rounded.svg?color=%23888888" onclick="clsbx()" alt="">
+            <a id="icon" href="/getsignin">signin</a>
+          </div>
+        </header>
         <div class="display-frame">
             <div class="slider is-set" id="slider"></div>
         </div>
@@ -18,10 +26,27 @@
             <div class="media-sec" id="pg-movies">
                 <script>
                     const sublevels = ["Free","With Subscription","With Pro-Subscription"];
-                    var slider = document.getElementById("slider");
+                    var slider = $("#slider");
                     let allInfo = `<%- allInfo.replace(/'/g, "\\'") %>`;
+                    let userInfo = `<%- userinfo.replace(/'/g, "\\'") %>`;
                     var mov = JSON.parse(allInfo);
+                    var use = JSON.parse(userInfo);
+                    if (use["found"]) {
+                        $("#greet").text(`Welcome ${use["username"]}`);
+                        $("#icon").text(use["name"].substring(0,2));
+                        $("#icon").attr({"href":"/profile","title":"profile"});
+                        $("#icon").css({
+                            "padding":"2%",
+                            "border-radius":"50%",
+                            "height":"100%",
+                            "aspect-ratio":"1/1",
+                        });
+                    } else {
+                        $("#greet").text('Welcome');
+                    }
+
                     let ht = '';
+
                     for (const media of mov) {
                         ht += `<div class="media-tile">
                                     <img src=${media["poster"]} alt="movie poster">
@@ -38,7 +63,8 @@
                                     </div>
                                 </div>`;
                     }
-                    document.getElementById("media").innerHTML = ht;
+                    
+                    $("#media").html(ht);
                     ht = '';
                     let displen = 4;
                     let dispstart = Math.floor(Math.random() * (mov.length - displen));
@@ -56,39 +82,78 @@
                                     </div>
                                 </div>`;
                     }
-                    slider.innerHTML = ht;
-                    let slides = document.getElementsByClassName("slide");
-                    slides[slides.length -1 ].classList.add("is-ref"); 
+                    
+                    slider.html(ht);
+                    let slides = $(".slide");
+                    $('.slide:last').addClass("is-ref"); 
                     var carousel = $('.slider');
                     var seats = $('.slide');
-
+                   
                     var next = function(el) {
-                      if (el.next().length > 0) {
-                        return el.next();
-                      } else {
-                        return seats.first();
-                      }
+                        if (el.next().length > 0) {
+                          return el.next();
+                        } else {
+                          return seats.first();
+                        }
                     };
-
-                    var progress = function(e) {
-                      var el = $('.is-ref').removeClass('is-ref');
-                      var new_seat = next(el);
                     
-                      new_seat.addClass('is-ref').css('order', 1);
-                      for (var i = 2, ref = seats.length; i <= ref; i++) {
+                    var progress = function(e) {
+                        var el = $('.is-ref').removeClass('is-ref');
+                        var new_seat = next(el);
+                    
+                        new_seat.addClass('is-ref').css('order', 1);
+                        for (var i = 2, ref = seats.length; i <= ref; i++) {
                         new_seat = next(new_seat).css('order', i);
-                      }
-                  
-                      carousel.removeClass('is-set');
-                  
-                      return setTimeout((function() {
+                        }
+                    
+                        carousel.removeClass('is-set');
+                    
+                        return setTimeout((function() {
                         return carousel.addClass('is-set');
-                      }), 0);
+                        }), 0);
                     };
-
                     window.setInterval(function(){
                       progress();
                     }, 5000);
+                    let items = [];
+                    
+                    function filIt() {
+                        let ht = '';
+                        for (const it of items) {
+                            ht += `<li><a href=/player?fid=${it["link"]}>${it["title"]}</a></li>`;
+                        }
+                        $("#srchbox").html(ht);
+                        if (ht === '') {
+                            $("#srchbox").html("<li><a>No media found of that name</a></li>"); 
+                        }
+                    }
+                    
+                    function getIt(param){
+                        let count = 0;
+                        items = [];
+                        for (const med of mov) {
+                            if ((med["title"].toLowerCase().includes(param))&&(count <= 10)) { 
+                                items.push({
+                                    title:med['title'],
+                                    link:med["full_id"]
+                                });
+                                count++;
+                            }
+                        }
+                        filIt();
+                    }
+                    
+                    getIt("");
+                    function srchIt() {
+                        $("#srchbox").css({"display":"flex"});
+                        getIt($("srch").value);
+                    }
+                    function clsbx(){
+                        $("#srchbox").css({"display":"none"});
+                    }
+                    function op(){
+                        $("#srchbox").css({"display":"flex"});
+                    }
                 </script>
             </div>
         </main>

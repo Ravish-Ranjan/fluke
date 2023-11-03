@@ -3,56 +3,77 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/sisu.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <!-- <link rel="stylesheet" href="/sisu.css"> -->
         <style></style>
         <title></title>
     </head>
     <body>
-        <main >
-            <form action="/signin" method="post" id="signin">
-                <h1>Sign In</h1>
-                <label for="username">Username<input type="text" name="username" id="username" required></label>
-                <label for="password">Password<input type="password" name="password" id="password" maxlength="12" minlength="8" required></label>
-                <input type="submit" value="Sign in">
-                <button class="toggle" type="button" onclick="togggle()">I don't have an account</button>
+        <main>
+            <form action="" id="signin">
+                <label for="username">Username <input type="text" name="username" id="username" required></label>
+                <label for="passwd">Password <input type="password" name="password" id="passwd" required></label>
+                <input type="submit" value="Sign In">
             </form>
-            <form action="/signup" method="post" id="signup">
-                <h1>Sign Up</h1>
-                <div class="inline">
-                    <label for="">Full Name<input type="text" name="fullname" id="fullname" required></label>
-                    <label for="">Username<input type="text" name="newusername" id="newusername" required></label>
-                </div>
-                <label for="">Email<input type="email" name="email" id="email" required></label>
-                <div class="inline">
-                    <label for="">Set Password<input type="password" name="createpasswd" id="createpasswd" maxlength="12" minlength="8" required></label>
-                    <label for="">Confirm Password<input type="text" name="confirmpasswd" id="confirmpasswd" maxlength="12" minlength="8" required></label>
-                </div>
-                <input type="submit" value="Sign up">
-                <button class="toggle" type="button" onclick="togggle()">I already have an account</button>
+            <form action="" id="signup">
+                <label for="name">Full Name <input type="text" name="fullname" id="name" required></label>
+                <label for="age">Age <input type="number" name="age" id="age" min="5" max="100" required></label>
+                <label for="username">Username <input type="text" name="username" id="newusername" required></label>
+                <label for="email">Email <input type="email" name="email" id="email" required></label>
+                <label for="createpasswd">Create Password <input type="password" name="crtpasswd" id="createpasswd" required></label>
+                <label for="confirmpasswd">Confirm Password <input type="password" name="cnfpasswd" id="confirmpasswd" required></label>
+                <input type="submit" value="Sign Up">
             </form>
         </main>
         <script>
-            const card = document.querySelector("main");
-            let state = true;
-            function togggle() {
-                if (state) {
-                    card.style.transform = "rotateY(180deg)";
-                } else {
-                    card.style.transform = "rotateY(0deg)";
-                }
-                state = !state;
-            }
-            const su = document.getElementById("signup");
-            const newpass = document.getElementById("createpasswd");
-            const conpass = document.getElementById("confirmmpasswd");
-            su.addEventListener('submit', function(event) {
-                alert(newpass.value);
-                var password = newpass.value;
-                var confirmPassword = conpass.value;
-                if (password !== confirmPassword) {
-                    alert('The passwords do not match.');
-                    event.preventDefault(); 
-                }
+            $(document).ready(() => {
+                $('#signin').submit((e) => {
+                    e.preventDefault();
+                    const cred = {
+                        username:$('#username').val(),
+                        password:$('#passwd').val()
+                    }
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST','/signin');
+                    xhr.setRequestHeader('Content-Type','application/json');
+                    xhr.send(JSON.stringify(cred));
+                    xhr.onload = () => {
+                        console.log(xhr.status);
+                        if (parseInt(xhr.status) === 200) {
+                            console.log("i am getting here");
+                            window.location.href = "/";
+                        }
+                        else{
+                            console.log("or i am getting here");
+                            const err = JSON.parse(xhr.responseText);
+                            console.log(err);
+                        }
+                    };
+                });
+                $('#signup').submit((e) => {
+                    e.preventDefault();
+                    const cred = {
+                        name:$('#name').val(),
+                        age:$('#age').val(),
+                        newusername:$('#newusername').val(),
+                        email:$('#email').val(),
+                        createpasswd:$('#createpasswd').val(),
+                        confirmpasswd:$('#confimpasswd').val(),
+                    };
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST','/signup');
+                    xhr.setRequestHeader('Content-Type','application/json');
+                    xhr.send(JSON.stringify(cred));
+                    xhr.onload = () => {
+                        if (xhr.status === 200) {
+                            window.location.href = "/";
+                        }
+                        else{
+                            const err = JSON.parse(xhr.responseText);
+                            console.log(err);
+                        }
+                    };
+                });
             });
         </script>
     </body>
