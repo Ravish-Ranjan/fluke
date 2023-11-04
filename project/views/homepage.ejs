@@ -3,159 +3,146 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/homepage.css">
+        <link rel="stylesheet" href="/styles/homepage.css">
         <link rel="shortcut icon" href="/logo-small.svg" type="image/x-icon">
         <script differ src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <title>Homepage | Fluke</title>
     </head>
     <body>
-        <header>
+        <div class="header">
           <span id="greet"></span>
           <div class="nav">
             <input type="search" oninput="srchIt()" onclick="op()" placeholder="Search Media" name="search" id="srch">
             <ul id="srchbox" class="srchbox"></ul>
-            <img src="https://api.iconify.design/material-symbols:cancel-outline-rounded.svg?color=%23888888" onclick="clsbx()" alt="">
+            <img src="https://api.iconify.design/material-symbols:cancel-outline-rounded.svg?color=%23aaaaaa" onclick="clsbx()" alt="">
             <a id="icon" href="/getsignin">signin</a>
           </div>
-        </header>
+        </div>
         <div class="display-frame">
             <div class="slider is-set" id="slider"></div>
         </div>
-        <main>
+        <!-- <main>
             <div id="media" class="media"></div>
-            <div class="media-sec" id="pg-movies">
-                <script>
-                    const sublevels = ["Free","With Subscription","With Pro-Subscription"];
-                    var slider = $("#slider");
-                    let allInfo = `<%- allInfo.replace(/'/g, "\\'") %>`;
-                    let userInfo = `<%- userinfo.replace(/'/g, "\\'") %>`;
-                    var mov = JSON.parse(allInfo);
-                    var use = JSON.parse(userInfo);
-                    if (use["found"]) {
-                        $("#greet").text(`Welcome ${use["username"]}`);
-                        $("#icon").text(use["name"].substring(0,2));
-                        $("#icon").attr({"href":"/profile","title":"profile"});
-                        $("#icon").css({
-                            "padding":"2%",
-                            "border-radius":"50%",
-                            "height":"100%",
-                            "aspect-ratio":"1/1",
+        </main> -->
+        <script>
+            const sublevels = ["Free","With Subscription","With Pro-Subscription"];
+            var slider = $("#slider");
+            let allInfo = `<%- allInfo.replace(/'/g, "\\'") %>`;
+            let userInfo = `<%- userinfo.replace(/'/g, "\\'") %>`;
+            var mov = JSON.parse(allInfo);
+            var use = JSON.parse(userInfo);
+            if (use["found"]) {
+                $("#greet").text(`Welcome ${use["username"]}`);
+                $("#icon").text(use["name"].substring(0,2));
+                $("#icon").attr({"href":"/profile","title":"profile"});
+                $("#icon").css({
+                    "padding":"2%",
+                    "border-radius":"50%",
+                    "height":"100%",
+                    "aspect-ratio":"1/1",
+                });
+            } else {
+                $("#greet").text('Welcome');
+            }
+
+            let ht = '';
+
+            for (const media of mov) {
+                ht += `
+                    <div class="media-tile">
+                        <img src=${media["poster"]} alt="movie poster">
+                        <div class="media-info">
+                            <span class="title">${media["title"]}</span>
+                            <div class="controls">
+                                <a title="play media" href=/player?fid=${media["full_id"]}><img src="play.svg" alt="play button"></a>
+                                <button title="add to watchlist" onclick="addwatch(${media["full_id"]})"><img src="list.svg" alt="list"></button>
+                            </div>
+                            <div class="desc">
+                                <span>${media["year"]}</span>&nbsp;●&nbsp;
+                                <span>${media["rating"]}</span>
+                            </div>
+                        </div>
+                    </div>`;
+            }
+//             <div class="card text-center ">
+//   <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+//     <img src="https://mdbootstrap.com/img/new/standard/nature/111.webp" class="img-fluid" />
+//     <a href="#!">
+//       <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+//     </a>
+//   </div>
+
+//   <div class="card-body">
+//     <h5 class="card-title">Card title</h5>
+//     <button type="button" class="btn btn-primary">Button</button>
+//   </div>
+//   <div class="card-footer">2 days ago</div>
+// </div>
+            $("#media").html(ht);
+            ht = '';
+            let displen = 4;
+            let dispstart = Math.floor(Math.random() * (mov.length - displen));
+            let dispmov = mov.slice(dispstart,dispstart+displen);
+            for (const media of dispmov) {
+                ht += `<div class="slide" style="background-image: url(${media["poster"]});">
+                            <div class="slide-info">
+                                <span class="title">${media["title"]}</span>
+                                <div class="subin">
+                                    <span>${media["year"]}</span>●
+                                    <span>Rating : ${media["rating"]}</span>●
+                                    <span>${sublevels[media["sublevel"]]}</span>
+                                </div>
+                                <span class="descrip">${media["plot"].substring(0,200)}...</span>
+                            </div>
+                        </div>`;
+            }
+            slider.html(ht);
+
+            let slides = $(".slide");
+            $('.slide:last').addClass("is-ref"); 
+            var carousel = $('.slider');
+            var seats = $('.slide');
+            let items = [];
+            
+            function filIt() {
+                let ht = '';
+                for (const it of items) {
+                    ht += `<a href=/player?fid=${it["link"]}>${it["title"]}</a>`;
+                }
+                $("#srchbox").html(ht);
+                if (ht === '') {
+                    $("#srchbox").html("<a>No media found of that name</a>"); 
+                }
+            }
+            
+            function getIt(param){
+                let count = 0;
+                items = [];
+                for (const med of mov) {
+                    if ((med["title"].toLowerCase().includes(param))&&(count <= 10)) { 
+                        items.push({
+                            title:med['title'],
+                            link:med["full_id"]
                         });
-                    } else {
-                        $("#greet").text('Welcome');
+                        count++;
                     }
-
-                    let ht = '';
-
-                    for (const media of mov) {
-                        ht += `<div class="media-tile">
-                                    <img src=${media["poster"]} alt="movie poster">
-                                    <div class="media-info">
-                                        <span class="title">${media["title"]}</span>
-                                        <div class="controls">
-                                            <a title="play media" href=/player?fid=${media["full_id"]}><img src="play.svg" alt="play button"></a>
-                                            <button title="add to watchlist" onclick="addwatch(${media["full_id"]})"><img src="list.svg" alt="list"></button>
-                                        </div>
-                                        <div class="desc">
-                                            <span>${media["year"]}</span>&nbsp;●&nbsp;
-                                            <span>${media["rating"]}</span>
-                                        </div>
-                                    </div>
-                                </div>`;
-                    }
-                    
-                    $("#media").html(ht);
-                    ht = '';
-                    let displen = 4;
-                    let dispstart = Math.floor(Math.random() * (mov.length - displen));
-                    let dispmov = mov.slice(dispstart,dispstart+displen);
-                    for (const media of dispmov) {
-                        ht += `<div class="slide" style="background-image: url(${media["poster"]});">
-                                    <div class="slide-info">
-                                        <span class="title">${media["title"]}</span>
-                                        <div class="subin">
-                                            <span>${media["year"]}</span>●
-                                            <span>Rating : ${media["rating"]}</span>●
-                                            <span>${sublevels[media["sublevel"]]}</span>
-                                        </div>
-                                        <span class="description">${media["plot"].substring(0,200)}...</span>
-                                    </div>
-                                </div>`;
-                    }
-                    
-                    slider.html(ht);
-                    let slides = $(".slide");
-                    $('.slide:last').addClass("is-ref"); 
-                    var carousel = $('.slider');
-                    var seats = $('.slide');
-                   
-                    var next = function(el) {
-                        if (el.next().length > 0) {
-                          return el.next();
-                        } else {
-                          return seats.first();
-                        }
-                    };
-                    
-                    var progress = function(e) {
-                        var el = $('.is-ref').removeClass('is-ref');
-                        var new_seat = next(el);
-                    
-                        new_seat.addClass('is-ref').css('order', 1);
-                        for (var i = 2, ref = seats.length; i <= ref; i++) {
-                        new_seat = next(new_seat).css('order', i);
-                        }
-                    
-                        carousel.removeClass('is-set');
-                    
-                        return setTimeout((function() {
-                        return carousel.addClass('is-set');
-                        }), 0);
-                    };
-                    window.setInterval(function(){
-                      progress();
-                    }, 5000);
-                    let items = [];
-                    
-                    function filIt() {
-                        let ht = '';
-                        for (const it of items) {
-                            ht += `<li><a href=/player?fid=${it["link"]}>${it["title"]}</a></li>`;
-                        }
-                        $("#srchbox").html(ht);
-                        if (ht === '') {
-                            $("#srchbox").html("<li><a>No media found of that name</a></li>"); 
-                        }
-                    }
-                    
-                    function getIt(param){
-                        let count = 0;
-                        items = [];
-                        for (const med of mov) {
-                            if ((med["title"].toLowerCase().includes(param))&&(count <= 10)) { 
-                                items.push({
-                                    title:med['title'],
-                                    link:med["full_id"]
-                                });
-                                count++;
-                            }
-                        }
-                        filIt();
-                    }
-                    
-                    getIt("");
-                    function srchIt() {
-                        $("#srchbox").css({"display":"flex"});
-                        getIt($("srch").value);
-                    }
-                    function clsbx(){
-                        $("#srchbox").css({"display":"none"});
-                    }
-                    function op(){
-                        $("#srchbox").css({"display":"flex"});
-                    }
-                </script>
-            </div>
-        </main>
+                }
+                filIt();
+            }
+            
+            getIt("");
+            function srchIt() {
+                $("#srchbox").css({"display":"flex"});
+                getIt($("#srch").val());
+            }
+            function clsbx(){
+                $("#srchbox").css({"display":"none"});
+            }
+            function op(){
+                $("#srchbox").css({"display":"flex"});
+            }
+        </script>
     </body>
 </html>

@@ -72,22 +72,38 @@ app.post("/addmedia",(req,res) => {
 
 app.post("/signin",(req,res) => {
     let form = req.body;
-    authen.getUserByUserName(db,form["username"]).then(data => {
+    authen.getUserByInfo(db,form["username"],form["password"]).then(data => {
         if (data["found"]) {
             res.cookie("uid",data["_id"]);
             res.status(200);
-            res.redirect("/")
+            res.redirect("/");
         } else {
-            res.status(202).json();
+            res.status(202).json({"err":"User not found :("});
         }
     });
 });
 
 app.post("/signup",(req,res) => {
     let form = req.body;
-    authen.getUserByUserName(db,form["newusername"]).then(data => {
-        
-    });
+    if (form["createpasswd"] !== form["confirmpasswd"]) {
+        res.status(202).json({"err":"Fields 'Create password' and 'Confirm password' are not same :("});
+    } else {
+        authen.getUserByInfo(db,form["newusername"],form["passwd"]).then(data => {
+            if (!data["found"]) {
+                authen.addUser(db,form).then(data => {
+                    if (data["added"]) {
+                        res.cookie("uid",data["_id"]);
+                        res.status(200);
+                        res.redirect("/");
+                    } else {
+                        res.status(202).json({"err":"Error adding new user :("});
+                    }
+                });
+            } else {
+                res.status(202).json({"err":"User alredy exists"});
+            }
+        });
+    }
 });
 
 app.get("/getsignin",(req,res) => {
