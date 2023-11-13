@@ -51,21 +51,18 @@
                 ht += `
                 <div class="card text-center ">
                     <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                        <img src=${media["poster"]} class="img-fluid" />
-                        <a href="#!">
-                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
-                        </a>
+                        <img src=${media["poster"]} class="" />
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">${media["title"]}</h5>
-                        <a title="play media" href=/player?fid=${media["full_id"]} class="btn btn-primary">
+                        <a title="play media" href=/player?fid=${media["full_id"]} class="btn">
                             <img src="assets/play.svg" alt="play button">
                         </a>
-                        <a title="add to watchlist" onclick="addwatch(${media["full_id"]})" class="btn btn-primary">
+                        <a title="add to watchlist" onclick="addwatch(${media["full_id"]})" class="btn">
                             <img src="assets/list.svg" alt="list">
                         </a>
+                        <div class="card-footer">${media["year"]} ● ${media["rating"]}</div>
                     </div>
-                    <div class="card-footer">${media["year"]} ● ${media["rating"]}</div>
                 </div>
                 `;
             }
@@ -75,7 +72,7 @@
             let dispstart = Math.floor(Math.random() * (mov.length - displen));
             let dispmov = mov.slice(dispstart,dispstart+displen);
             for (const media of dispmov) {
-                ht += `<div class="slide" style="background-image: url(${media["poster"]});">
+                ht += `<a href=/player?fid=${media["full_id"]} class="slide" style="background-image: url(${media["poster"]});">
                             <div class="slide-info">
                                 <span class="title">${media["title"]}</span>
                                 <div class="subin">
@@ -85,7 +82,7 @@
                                 </div>
                                 <span class="descrip">${media["plot"].substring(0,200)}...</span>
                             </div>
-                        </div>`;
+                        </a>`;
             }
             slider.html(ht);
 

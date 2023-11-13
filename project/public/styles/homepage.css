@@ -2,7 +2,6 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  outline: 1px solid limegreen;
   font-family: android;
 }
 
@@ -11,6 +10,7 @@
   --col1:#d8b92b;
   --col2:#45d59d;
   --col3:#41656c;
+  --col4:#385257;
 }
 
 @font-face {
@@ -27,9 +27,8 @@ body {
   justify-content: flex-start;
   align-items: center;
   gap: 1rem;
-  background-image: conic-gradient(var(--brand), var(--col3));
+  background-image: conic-gradient(from 180deg, var(--brand), var(--col3));
   font-size: 15px;
-  height: 100vh;
 }
 
 .header {
@@ -45,7 +44,7 @@ body {
 .header #greet {
   font-weight: bold;
   font-size: 2em;
-  color: white;
+  color: var(--col1);
 }
 .header .nav {
   width: 30%;
@@ -74,6 +73,7 @@ body {
   padding: 0 2%;
   background-color: var(--col3);
   flex-direction: column;
+  border-radius: 0 0 1rem 1rem;
   gap: 1rem;
 }
 .header .nav ul a {
@@ -113,6 +113,7 @@ body {
   scroll-behavior: smooth;
 }
 .display-frame .slider .slide {
+  text-decoration: none;
   width: 100%;
   height: 95%;
   scroll-snap-align: center;
@@ -127,7 +128,7 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding-left: 5%;
+  padding: 5% 0 5% 5%;
   justify-content: space-evenly;
   align-items: flex-start;
   background-image: linear-gradient(to right, var(--brand) 0, var(--brand) 60%, transparent);
@@ -156,16 +157,75 @@ main {
   justify-content: flex-start;
   align-items: center;
   width: 98%;
-  height: 90vh;
 }
 main .media {
   width: 98vw;
-  height: 100%;
+  height: 50vh;
   display: flex;
-  gap: 1rem;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.5rem;
+  overflow-x: scroll;
+  padding-inline: 1.5rem;
+  margin: 0 0 5% 0;
+  background-color: rgba(0, 0, 0, 0.2666666667);
 }
 main .media .card {
-  height: 100%;
+  height: 95%;
+  width: 30vw;
+  aspect-ratio: 3/4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  background-color: var(--col3);
+  border-radius: 1rem;
+}
+main .media .card .bg-image {
+  width: 95%;
+  display: grid;
+  place-items: center;
+  z-index: 0;
+  transition: all 0.25s ease-in-out;
+}
+main .media .card .bg-image img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+main .media .card .card-body {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  min-width: 50%;
+  transform: translate(-50%, -100%);
+  z-index: 1;
+  padding-bottom: 5%;
+  width: 100%;
+  opacity: 0;
+  transition: all 0.25s ease-in-out;
+  border-radius: 0 0 1rem 1rem;
+  background-image: linear-gradient(to bottom, transparent, var(--col3));
+}
+main .media .card .card-body h5 {
+  font-size: 2em;
+  width: 95%;
+  color: var(--col1);
+  text-align: center;
+  margin: 0 auto;
+}
+main .media .card .card-body a {
+  width: 45%;
+  background-color: transparent;
+  outline: none;
+}
+main .media .card:hover .card-body {
+  opacity: 1;
+}
+main .media .card:hover .bg-image {
+  filter: brightness(0.5);
 }
 
 /* ===== Scrollbar CSS ===== */
