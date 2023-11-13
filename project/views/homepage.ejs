@@ -23,9 +23,7 @@
         <div class="display-frame">
             <div class="slider is-set" id="slider"></div>
         </div>
-        <!-- <main>
-            <div id="media" class="media"></div>
-        </main> -->
+        <main><div id="media" class="media"></div></main>
         <script>
             const sublevels = ["Free","With Subscription","With Pro-Subscription"];
             var slider = $("#slider");
@@ -51,35 +49,26 @@
 
             for (const media of mov) {
                 ht += `
-                    <div class="media-tile">
-                        <img src=${media["poster"]} alt="movie poster">
-                        <div class="media-info">
-                            <span class="title">${media["title"]}</span>
-                            <div class="controls">
-                                <a title="play media" href=/player?fid=${media["full_id"]}><img src="play.svg" alt="play button"></a>
-                                <button title="add to watchlist" onclick="addwatch(${media["full_id"]})"><img src="list.svg" alt="list"></button>
-                            </div>
-                            <div class="desc">
-                                <span>${media["year"]}</span>&nbsp;●&nbsp;
-                                <span>${media["rating"]}</span>
-                            </div>
-                        </div>
-                    </div>`;
+                <div class="card text-center ">
+                    <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                        <img src=${media["poster"]} class="img-fluid" />
+                        <a href="#!">
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">${media["title"]}</h5>
+                        <a title="play media" href=/player?fid=${media["full_id"]} class="btn btn-primary">
+                            <img src="assets/play.svg" alt="play button">
+                        </a>
+                        <a title="add to watchlist" onclick="addwatch(${media["full_id"]})" class="btn btn-primary">
+                            <img src="assets/list.svg" alt="list">
+                        </a>
+                    </div>
+                    <div class="card-footer">${media["year"]} ● ${media["rating"]}</div>
+                </div>
+                `;
             }
-//             <div class="card text-center ">
-//   <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-//     <img src="https://mdbootstrap.com/img/new/standard/nature/111.webp" class="img-fluid" />
-//     <a href="#!">
-//       <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
-//     </a>
-//   </div>
-
-//   <div class="card-body">
-//     <h5 class="card-title">Card title</h5>
-//     <button type="button" class="btn btn-primary">Button</button>
-//   </div>
-//   <div class="card-footer">2 days ago</div>
-// </div>
             $("#media").html(ht);
             ht = '';
             let displen = 4;
