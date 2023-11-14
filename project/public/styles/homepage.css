@@ -217,15 +217,18 @@ main .media .card .card-body h5 {
   margin: 0 auto;
 }
 main .media .card .card-body a {
-  width: 45%;
+  width: 25%;
   background-color: transparent;
   outline: none;
+}
+main .media .card .card-body .card-footer {
+  color: white;
 }
 main .media .card:hover .card-body {
   opacity: 1;
 }
 main .media .card:hover .bg-image {
-  filter: brightness(0.5);
+  filter: brightness(0.4);
 }
 
 /* ===== Scrollbar CSS ===== */

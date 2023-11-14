@@ -4,26 +4,40 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <!-- <link rel="stylesheet" href="/sisu.css"> -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/styles/sisu.css">
         <style></style>
         <title></title>
     </head>
     <body>
         <main>
             <form action="" id="signin">
+                <h1>Sign In</h1>
                 <label for="username">Username <input type="text" name="username" id="username" required></label>
                 <label for="passwd">Password <input type="password" name="password" id="passwd" autocomplete="" required></label>
-                <input type="submit" value="Sign In">
+                <input type="submit" class="btn button" value="Sign In">
             </form>
             <form action="" id="signup">
+                <h1>Sign Up</h1>
                 <label for="name">Full Name <input type="text" name="fullname" id="name" required></label>
-                <label for="age">Age <input type="number" name="age" id="age" min="5" max="100" required></label>
-                <label for="username">Username <input type="text" name="username" id="newusername" required></label>
+                <label for="age" style="width: 48%;">Age <input style="width: 90%;" type="number" name="age" id="age" min="5" max="100" required></label>
+                <label for="username" style="width: 48%;">Username <input style="width: 90%;" type="text" name="username" id="newusername" required></label>
                 <label for="email">Email <input type="email" name="email" id="email" required></label>
-                <label for="createpasswd">Create Password <input type="password" name="crtpasswd" autocomplete="" id="createpasswd" required></label>
-                <label for="confirmpasswd">Confirm Password <input type="password" name="cnfpasswd" autocomplete="" id="confirmpasswd" required></label>
-                <input type="submit" value="Sign Up">
+                <label for="createpasswd" style="width: 48%;">Create Password <input style="width: 90%;" type="password" name="crtpasswd" autocomplete="" id="createpasswd" required></label>
+                <label for="confirmpasswd" style="width: 48%;">Confirm Password <input style="width: 90%;" type="text" name="cnfpasswd" autocomplete="" id="confirmpasswd" required></label>
+                <input type="submit" class="btn button" value="Sign Up">
             </form>
+            <div class="cover">
+                <div class="front">
+                    <span>Don't have an account??</span>
+                    <button type="button" onclick="anibac()" class="btn button">Sign Up</button>
+                </div>
+                <div class="back">
+                    <span>Already have an account??</span>
+                    <button type="button" onclick="anifor()" class="btn button">Sign In</button>
+                </div>
+            </div>
         </main>
         <script>
             $(document).ready(() => {
@@ -73,6 +87,16 @@
                     };
                 });
             });
+            function anifor() {
+                $(".cover").css({
+                    "animation-name":"switchfor"
+                });
+            }
+            function anibac() {
+                $(".cover").css({
+                    "animation-name":"switchbac"
+                });
+            }
         </script>
     </body>
 </html>

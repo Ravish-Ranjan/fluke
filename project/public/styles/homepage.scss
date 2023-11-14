@@ -212,16 +212,19 @@ main{
                     margin: 0 auto;
                 }
                 a{
-                    width: 45%;
+                    width: 25%;
                     background-color: transparent;
                     outline: none;
+                }
+                .card-footer{
+                    color: white;
                 }
             }
             &:hover .card-body{
                 opacity: 1;
             }
             &:hover .bg-image{
-                filter: brightness(.5);
+                filter: brightness(.4);
             }
         }
     }
