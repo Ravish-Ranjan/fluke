@@ -26,17 +26,18 @@ function scandir(){
 
 
 function isSame(arr1,arr2) {
-    if (arr1.lenght !== arr2.lenght) {
+    if (arr1.length !== arr2.length) {
         return false;
     } else {
-        let shorter = (arr1.length > arr2.lenght) ? arr2 : arr1;
+        console.log(arr1,arr2);
+        let shorter = (arr1.length > arr2.length) ? arr2 : arr1;
         let longer = (shorter === arr1) ? arr2 : arr1;
         for (let i = 0; i < shorter.length; i++) {
             if (longer.includes(shorter[i])) {
                 let torem = shorter[i]
                 longer = longer.filter(elem => elem !== torem);
                 shorter = shorter.filter(elem => elem !== torem);
-                if (shorter.lenght === longer.lenght) {
+                if (shorter.length === longer.length) {
                     continue;
                 }
                 return false;

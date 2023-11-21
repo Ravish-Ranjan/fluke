@@ -1,4 +1,10 @@
 const { ObjectId } = require("mongodb");
+const fs = require('fs');
+
+function readFiles(filepath) {
+    let data = fs.readFileSync(filepath);
+    return JSON.parse(data);
+}
 
 async function addUser(db,form) {
     let userdoc = await db.collection("user_info").insertOne({
@@ -31,10 +37,11 @@ async function getUserById(db,user) {
     }
     return {username : userdoc["username"],name : userdoc["name"],"found":true};
 }
-
+// console.log(readFiles("/mediadata/scandir.json"));
 
 module.exports = {
     getUserById:getUserById,
+    readFiles:readFiles,
     addUser:addUser,
     getUserByInfo: getUserByInfo,
 };

@@ -46,28 +46,26 @@ app.get("/admin@3567",(req,res) => {
 app.post("/addmedia",(req,res) => {
     let form = req.body;
     let adfold = "";
-    fetchmed.scandir().then(medfold => {
-        for (const typefold of medfold["folders"]) {
-            if (typefold["name"] === form["media-type"]) {
-                for (const medfile of typefold["folders"]) {
-                    if (fetchmed.isSame(medfile["files"],form["media-fold"])) {
-                        adfold = medfile["root"];
-                    }
+    let medfold = fetchmed.scandir() ;
+    for (const typefold of medfold["folders"]) {
+        if (typefold["name"] === form["media-type"]) {
+            for (const medfile of typefold["folders"]) {
+                if (fetchmed.isSame(medfile["files"],form["media-fold"])) {
+                    adfold = medfile["root"];
                 }
             }
         }
-        fetchmed.fetchInfo(form["media-name"]).then(async data => {
-            data["foldpath"] = adfold;
-            data["filepath"] = form["media-fold"];
-            data["sublevel"] = parseInt(fetchmed.subLevel(data["Released"]));
-            const mef_if = await db.collection("media_info").insertOne(data);
-            const mef_if_id = mef_if.insertedId;
-
-            let shortInfo = fetchmed.getShort(data, mef_if_id,form["media-type"]);
-            const sh_if = await db.collection("quick_info").insertOne(shortInfo);
-            res.render("logerr.ejs",{err:"media-added"})
-        });
-    })
+    }
+    fetchmed.fetchInfo(form["media-name"]).then(async data => {
+        data["foldpath"] = adfold;
+        data["filepath"] = form["media-fold"];
+        data["sublevel"] = parseInt(fetchmed.subLevel(data["Released"]));
+        const mef_if = await db.collection("media_info").insertOne(data);
+        const mef_if_id = mef_if.insertedId;
+        let shortInfo = fetchmed.getShort(data, mef_if_id,form["media-type"]);
+        const sh_if = await db.collection("quick_info").insertOne(shortInfo);
+        res.render("logerr.ejs",{err:"media-added"})
+    });
 });
 
 app.post("/signin",(req,res) => {
@@ -111,9 +109,25 @@ app.get("/getsignin",(req,res) => {
 });
 
 app.get("/player",async (req,res) => {
-    let fid = req.query["fid"].toString();
-    let fdoc = await db.collection("media_info").findOne({_id:new ObjectId(fid)});
-    res.render("player.ejs",{data:JSON.stringify(fdoc)});
+    // let fid = req.query["fid"].toString();
+    // let fdoc = await db.collection("media_info").findOne({_id:new ObjectId(fid)});
+    // res.render("player.ejs",{data:JSON.stringify(fdoc)});
+    let user = req.cookies.uid;
+    if (user) {
+        authen.getUserById(db,user).then(async (data) => {
+            if (data["found"]) {
+                let fid = req.query["fid"].toString();
+                let fdoc = await db.collection("media_info").findOne({_id:new ObjectId(fid)});
+                res.render("player.ejs",{data:JSON.stringify(fdoc)});
+            }
+            else{
+                res.render("sisu.ejs")
+            }
+        });
+    }
+    else{
+        res.render("sisu.ejs");
+    }
 });
 
 conDb((err) => {

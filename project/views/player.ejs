@@ -3,10 +3,43 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="/logo-small.svg" type="image/x-icon">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/styles/player.css">
+        <link rel="shortcut icon" href="/assets/logo-small.svg" type="image/x-icon">
+        <style></style>
         <title>Player | Fluke</title>
     </head>
     <body>
-        <%= data %>
+        <video controls autoplay preload="metadata">
+        </video>
+        <script>
+            let datastr = `<%- data %>`;
+            let data = JSON.parse(datastr);
+            let files = data["filepath"];
+            let ht = "";
+            $("video").attr({
+                "poster":data["Poster"],                        
+            });
+            let fllen = files[0].length;
+            if (files.length > 1) {
+                ht += `
+                <source src=${data["foldpath"]+files[0]}>
+                <track
+                label="English"
+                kind="subtitles"
+                srclang="en"
+                src=${data["foldpath"]+files[1]} 
+                default
+                />
+                `;
+            }
+            else{
+                ht += `<source src=${data["foldpath"]+files[0]}>`;
+            }
+            ht += "<p>Your browser doesn't support this file format</p>"
+            $("video").html(ht);
+        </script>
     </body>
 </html>

@@ -1,0 +1,19 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+video {
+  width: 95%;
+  max-height: 80vh;
+  margin-top: 5%;
+  background-color: #23272e;
+}/*# sourceMappingURL=player.css.map */
