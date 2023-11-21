@@ -1,7 +1,7 @@
 *{
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
+    // box-sizing: border-box;
     // outline: 1px solid lime;     
 }
 :root{
@@ -33,7 +33,7 @@ body{
             backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
-            justify-content: space-evenly;
+            justify-content: center;
             border: none;
             h1{
                 color: var(--col1);
@@ -48,6 +48,8 @@ body{
             }
             input[type="submit"]{
                 font-size: large;
+                background-color: var(--col2);
+                font-weight: bold;
             }
             .form-control{
                 background-color: transparent;
@@ -72,7 +74,7 @@ body{
                 place-items: center;
                 transform-origin: 0% 50%;
                 .front,.back{
-                    outline: 3px solid var(--col1);
+                    outline: 3px solid var(--col2);
                     outline-offset: -12px;
                     position: absolute;
                     width: 100%;
@@ -92,6 +94,7 @@ body{
                         width: 80%;
                         background-color: var(--col1);
                         font-size: large;
+                        font-weight: bold;
                     }
                 }
                 .back{
@@ -121,7 +124,7 @@ body{
             .well{
                 position: absolute;
                 width: 90% ;
-                height: 90%;
+                padding-block: 15%;
                 backface-visibility: hidden;
                 -webkit-backface-visibility: hidden;
                 background-color: var(--col3);
@@ -133,8 +136,10 @@ body{
                     align-items: center;
                     color: white;
                     font-size: smaller;
+                    margin-top: 5%;
                     span{
                         color:#45bfd5;
+                        font-size: small;
                     }
                     button{
                         background-color: transparent;
