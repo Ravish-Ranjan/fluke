@@ -7,35 +7,78 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="/styles/sisu.css">
+        <link rel="shortcut icon" href="/assets/logo-small.svg" type="image/x-icon">
         <style></style>
-        <title></title>
+        <title>Signin | Fluke</title>
     </head>
     <body>
-        <main>
-            <form action="" id="signin">
-                <h1>Sign In</h1>
-                <label for="username">Username <input type="text" name="username" id="username" required></label>
-                <label for="passwd">Password <input type="password" name="password" id="passwd" autocomplete="" required></label>
-                <input type="submit" class="btn button" value="Sign In">
-            </form>
-            <form action="" id="signup">
-                <h1>Sign Up</h1>
-                <label for="name">Full Name <input type="text" name="fullname" id="name" required></label>
-                <label for="age" style="width: 48%;">Age <input style="width: 90%;" type="number" name="age" id="age" min="5" max="100" required></label>
-                <label for="username" style="width: 48%;">Username <input style="width: 90%;" type="text" name="username" id="newusername" required></label>
-                <label for="email">Email <input type="email" name="email" id="email" required></label>
-                <label for="createpasswd" style="width: 48%;">Create Password <input style="width: 90%;" type="password" name="crtpasswd" autocomplete="" id="createpasswd" required></label>
-                <label for="confirmpasswd" style="width: 48%;">Confirm Password <input style="width: 90%;" type="text" name="cnfpasswd" autocomplete="" id="confirmpasswd" required></label>
-                <input type="submit" class="btn button" value="Sign Up">
-            </form>
-            <div class="cover">
-                <div class="front">
-                    <span>Don't have an account??</span>
-                    <button type="button" onclick="anibac()" class="btn button">Sign Up</button>
+        <main class="container">
+            <form action="" id="signin" class="well col-xs-4">
+                <h1 class="text-center">Sign In</h1>
+                <div>
+                    <div class="form-group">
+                        <label title="required" for="username">Username <span>*</span></label>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="" required>
+                    </div>
+                    <div class="form-group">
+                        <label title="required" for="passwd">Password <span>*</span></label>
+                        <input type="password" class="form-control" name="password" id="passwd" autocomplete="" required>
+                    </div>
                 </div>
-                <div class="back">
+                <input type="submit" class="btn btn-primary btn-block button" value="Sign In">
+                <div class="front" style="display: none;">
+                    <span>Don't have an account??</span>
+                    <button type="button" onclick="anismbac()" class="btn btn-primary button">Sign Up</button>
+                </div>
+            </form>
+            <form action="" id="signup" class="well col-xs-4">
+                <h1 class="text-center">Sign Up</h1>
+                <div>
+                    <div class="form-group">
+                        <label title="required" for="name">Full Name <span>*</span></label>
+                        <input type="text" class="form-control" name="fullname" id="name" required>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-6">
+                            <label title="required" for="age">Age <span>*</span></label>
+                            <input type="number" class="form-control" name="age" id="age" min="5" max="100" required>
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label title="required" for="username">Username <span>*</span></label>
+                            <input type="text" class="form-control" name="username" id="newusername" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label title="required" for="email">Email <span>*</span></label>
+                        <input type="email" class="form-control" name="email" id="email" required>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-6">
+                            <label title="required" for="createpasswd">Create Password <span>*</span></label>
+                            <input type="password" class="form-control" name="crtpasswd" id="createpasswd" required>
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label title="required" for="confirmpasswd">Confirm Password <span>*</span></label>
+                            <input type="text" class="form-control" name="cnfpasswd" id="confirmpasswd" required>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary btn-block button" value="Sign Up">
+                <div class="back" style="display: none;">
                     <span>Already have an account??</span>
-                    <button type="button" onclick="anifor()" class="btn button">Sign In</button>
+                    <button type="button" onclick="anismfor()" class="btn btn-primary button">Sign In</button>
+                </div>
+            </form>
+            <div class="cover col-xs-4">
+                <div class="cover-inner">
+                    <div class="front">
+                        <span>Don't have an account??</span>
+                        <button type="button" onclick="anibac()" class="btn button">Sign Up</button>
+                    </div>
+                    <div class="back">
+                        <span>Already have an account??</span>
+                        <button type="button" onclick="anifor()" class="btn button">Sign In</button>
+                    </div>
                 </div>
             </div>
         </main>
@@ -88,13 +131,23 @@
                 });
             });
             function anifor() {
-                $(".cover").css({
-                    "animation-name":"switchfor"
+                $(".cover-inner").css({
+                    "transform":"rotateY(0deg)"
                 });
             }
             function anibac() {
-                $(".cover").css({
-                    "animation-name":"switchbac"
+                $(".cover-inner").css({
+                    "transform":"rotateY(-180deg)"
+                });
+            }
+            function anismfor() {
+                $("main").css({
+                    "transform":"rotateY(0deg)"
+                });
+            }
+            function anismbac() {
+                $("main").css({
+                    "transform":"rotateY(-180deg)"
                 });
             }
         </script>
