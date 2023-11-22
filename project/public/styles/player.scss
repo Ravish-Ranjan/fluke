@@ -2,16 +2,90 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    // outline: 1px solid limegreen;
+    font-family: android;
+}
+:root{
+    --brand:#23272e;
+    --col1:#d8b92b;
+    --col2:#45d59d;
+    --col3:#41656c;
+    --col4:#385257;
+}
+@font-face {
+    font-family: android;
+    src: url("/fonts/Roboto-Medium.ttf");
 }
 body{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-}
-video{
-    width: 95%;
-    max-height: 80vh;
-    margin-top: 5%;
-    background-color: #23272e;
+    gap: 2rem;
+    // height: 100vh;
+    background-image: conic-gradient(var(--brand),var(--col3));
+    font-size: 15px;
+    video{
+        width: 95%;
+        height: 70vh;
+        margin-top: 2.5%;
+        background-color: #23272e;
+    }
+    .info{
+        width: 95%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 5vh;
+        @media screen and (max-width:49.125em) {
+            .info-fluid{
+                font-size: .5em;
+                &:first-child{
+                    font-size: 1em;
+                }
+            }
+            .info-line{
+                gap: 0;
+                align-items: center;
+            }
+        }
+        .info-fluid{
+            font-size: 1em;
+            color: white;
+            text-align: center;
+            background-color: #23272e99;
+            padding: 2% 5%;
+            &:first-child{
+                background-color: #23272e;
+                font-size: 2em;
+                color: var(--col1);
+                align-self: center;
+                padding: 0;
+                width: 100%;
+            }
+        }
+        .info-line{
+            font-size: 1em;
+            align-self: center;
+            gap: 1rem; 
+            display: flex;
+            justify-content: center;
+            color: white;
+            background-color: var(--brand);
+            width: 100%;
+            span{
+                color: var(--col2);
+            }
+        }
+        .key{
+            padding-left: 5%;
+            color: var(--col1);
+            background-color: #23272e99;
+            width: 100%;
+            .value{
+                color: white;
+            }
+        }
+    }
 }

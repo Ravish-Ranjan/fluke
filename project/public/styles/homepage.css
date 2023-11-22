@@ -46,6 +46,11 @@ body {
   font-size: 2em;
   color: var(--col1);
 }
+@media screen and (max-width: 49.125em) {
+  .header #greet {
+    font-size: 1.5em;
+  }
+}
 .header .nav {
   width: 30%;
   height: 60%;
@@ -123,6 +128,20 @@ body {
   display: grid;
   place-items: center;
 }
+@media screen and (max-width: 49.125em) {
+  .display-frame .slider .slide {
+    background-size: auto 100%;
+  }
+  .display-frame .slider .slide .slide-info {
+    padding: 15% 0 15% 5%;
+  }
+  .display-frame .slider .slide .slide-info .title {
+    font-size: 2em;
+  }
+  .display-frame .slider .slide .slide-info .descrip {
+    font-size: 1em;
+  }
+}
 .display-frame .slider .slide .slide-info {
   height: 100%;
   width: 100%;
@@ -138,6 +157,7 @@ body {
   font-size: 3em;
   max-width: 50%;
   line-height: 85%;
+  color: var(--col1);
 }
 .display-frame .slider .slide .slide-info .subin {
   font-size: 1em;
@@ -181,6 +201,11 @@ main .media .card {
   position: relative;
   background-color: var(--col3);
   border-radius: 1rem;
+}
+@media screen and (max-width: 49.125em) {
+  main .media .card {
+    width: 70vw;
+  }
 }
 main .media .card .bg-image {
   width: 95%;

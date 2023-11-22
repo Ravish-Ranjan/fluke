@@ -12,8 +12,8 @@
         <title>Player | Fluke</title>
     </head>
     <body>
-        <video controls autoplay preload="metadata">
-        </video>
+        <video controls autoplay preload="metadata"></video>
+        <div class="info"></div>
         <script>
             let datastr = `<%- data %>`;
             let data = JSON.parse(datastr);
@@ -40,6 +40,21 @@
             }
             ht += "<p>Your browser doesn't support this file format</p>"
             $("video").html(ht);
+            console.log(data);
+            const infosdir = ["Language","Rated","Year","Runtime"];
+            const infosexp = ["Genre","Actors","Director","Writer"];
+            ht = "";
+            ht+= `
+            <span class="info-fluid">${data["Title"]}</span><span class="info-fluid">${data["Plot"]}</span>
+            <div class="info-line">
+                <span>${data["Language"]}</span> ● <span>${data["Rated"]}</span> ● 
+                <span>${data["Year"]}</span> ● <span>${data["Runtime"]}</span>
+            </div>
+             `;
+            for (const info of infosexp) {
+                ht += `<span class="key">${info} : <span class="value">${data[info]}</span></span>`;
+            }
+            $(".info").html(ht);
         </script>
     </body>
 </html>
