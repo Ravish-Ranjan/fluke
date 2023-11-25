@@ -17,7 +17,7 @@
             <input type="search" oninput="srchIt()" onclick="op()" placeholder="Search Media" name="search" id="srch">
             <ul id="srchbox" class="srchbox"></ul>
             <img src="https://api.iconify.design/material-symbols:cancel-outline-rounded.svg?color=%23aaaaaa" onclick="clsbx()" alt="">
-            <a id="icon" href="/getsignin">signin</a>
+            <div onclick="window.location.href = '/getsignin';" id="icon">signin</div>
           </div>
         </div>
         <div class="display-frame">
@@ -34,8 +34,15 @@
             var use = JSON.parse(userInfo);
             if (use["found"]) {
                 $("#greet").text(`Welcome ${use["username"]}`);
-                $("#icon").text(use["name"].substring(0,2));
-                $("#icon").attr({"href":"/profile","title":"profile"});
+                $("#icon").html(
+                    `${use['name'].substring(0,2)}
+                    <button type='button' onclick="sout()" class='signout form-control'>Signout</button>`);
+                $("#icon").attr({
+                    "onclick":"",
+                    "title":"profile",
+                    "onmouseover":"$('.signout').css({'display':'block'})",
+                    "onmouseout":"$('.signout').css({'display':'none'})"
+                });
                 $("#icon").css({
                     "padding":"2%",
                     "border-radius":"50%",
@@ -129,6 +136,11 @@
             }
             function op(){
                 $("#srchbox").css({"display":"flex"});
+            }
+            function sout() {
+                console.log('something');
+                document.cookie = "uid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                window.location.reload();
             }
         </script>
     </body>

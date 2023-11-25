@@ -86,13 +86,27 @@ body{
             height:80%;
             cursor: pointer;
         }
-        a{
+        #icon{
+            cursor: pointer;
             text-decoration: none;
             color: white;
+            display: flex;
+            flex-direction: column;
+            position: relative;
             background-color: var(--col3);
             padding: 0 2%;
             border-radius: .25rem;
             font-size: 1.5em;
+            .signout{
+                position: absolute;
+                top: 100%;
+                right: 0%;
+                display: none;
+                background-color: var(--col3);
+                color: #ddd;
+                font-size: small;
+                width: max(100px,10vw);
+            }  
         }
     }
 }

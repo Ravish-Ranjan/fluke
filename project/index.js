@@ -109,9 +109,6 @@ app.get("/getsignin",(req,res) => {
 });
 
 app.get("/player",async (req,res) => {
-    // let fid = req.query["fid"].toString();
-    // let fdoc = await db.collection("media_info").findOne({_id:new ObjectId(fid)});
-    // res.render("player.ejs",{data:JSON.stringify(fdoc)});
     let user = req.cookies.uid;
     if (user) {
         authen.getUserById(db,user).then(async (data) => {
@@ -129,6 +126,7 @@ app.get("/player",async (req,res) => {
         res.render("sisu.ejs");
     }
 });
+
 
 conDb((err) => {
     if (!err) {

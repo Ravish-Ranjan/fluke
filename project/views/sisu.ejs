@@ -131,14 +131,12 @@
                 });
             });
             function anifor() {
-                $(".cover-inner").css({
-                    "transform":"rotateY(0deg)"
-                });
+                $(".cover-inner").css({"transform":"rotateY(0deg)"});
+                $(".cover").css({"transform":"translateX(50%)"});
             }
             function anibac() {
-                $(".cover-inner").css({
-                    "transform":"rotateY(-180deg)"
-                });
+                $(".cover-inner").css({"transform":"rotateY(-180deg)"});
+                $(".cover").css({"transform":"translateX(-50%)"});
             }
             function anismfor() {
                 $("main").css({

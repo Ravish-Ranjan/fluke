@@ -64,6 +64,7 @@ body{
             padding: 0;
             perspective: 1000px;
             transform: translateX(50%);
+            transition: .5s ease-in-out;
             .cover-inner{
                 position: relative;
                 height: 100%;
@@ -72,7 +73,6 @@ body{
                 transform-style: preserve-3d;
                 display: grid;
                 place-items: center;
-                transform-origin: 0% 50%;
                 .front,.back{
                     outline: 3px solid var(--col2);
                     outline-offset: -12px;

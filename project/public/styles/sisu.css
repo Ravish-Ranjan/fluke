@@ -64,6 +64,7 @@ body main .cover {
   padding: 0;
   perspective: 1000px;
   transform: translateX(50%);
+  transition: 0.5s ease-in-out;
 }
 body main .cover .cover-inner {
   position: relative;
@@ -73,7 +74,6 @@ body main .cover .cover-inner {
   transform-style: preserve-3d;
   display: grid;
   place-items: center;
-  transform-origin: 0% 50%;
 }
 body main .cover .cover-inner .front, body main .cover .cover-inner .back {
   outline: 3px solid var(--col2);
