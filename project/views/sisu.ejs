@@ -12,6 +12,7 @@
         <title>Signin | Fluke</title>
     </head>
     <body>
+        <div class="msg">Lorem ipsum dolor sit amet.</div>
         <main class="container">
             <form action="" id="signin" class="well col-xs-4">
                 <h1>Sign In</h1>
@@ -95,13 +96,17 @@
                     xhr.setRequestHeader('Content-Type','application/json');
                     xhr.send(JSON.stringify(cred));
                     xhr.onload = () => {
-                        console.log(xhr.status);
                         if (parseInt(xhr.status) === 200) {
                             window.location.href = "/";
                         }
                         else{
-                            const err = JSON.parse(xhr.responseText);
+                            const err = JSON.parse(xhr.responseText)["err"];
                             console.log(err);
+                            $(".msg").text(`${err}`);
+                            $(".msg").css({"animation-name":"showmsg"});
+                            setTimeout(() => {
+                                $(".msg").css({"animation-name":"none"})
+                            }, 7000);
                         }
                     };
                 });
@@ -124,8 +129,13 @@
                             window.location.href = "/";
                         }
                         else{
-                            const err = JSON.parse(xhr.responseText);
+                            const err = JSON.parse(xhr.responseText)["err"];
                             console.log(err);
+                            $(".msg").text(`${err}`);
+                            $(".msg").css({"animation-name":"showmsg"});
+                            setTimeout(() => {
+                                $(".msg").css({"animation-name":"none"})
+                            }, 7000);
                         }
                     };
                 });

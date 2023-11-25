@@ -86,7 +86,7 @@ app.post("/signup",(req,res) => {
     if (form["createpasswd"] !== form["confirmpasswd"]) {
         res.status(202).json({"err":"Fields 'Create password' and 'Confirm password' are not same :("});
     } else {
-        authen.getUserByInfo(db,form["newusername"],form["passwd"]).then(data => {
+        authen.getUserByInfo(db,form["newusername"],form["createpasswd"]).then(data => {
             if (!data["found"]) {
                 authen.addUser(db,form).then(data => {
                     if (data["added"]) {
@@ -98,7 +98,7 @@ app.post("/signup",(req,res) => {
                     }
                 });
             } else {
-                res.status(202).json({"err":"User alredy exists"});
+                res.status(202).json({"err":"User already exists"});
             }
         });
     }

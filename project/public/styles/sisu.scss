@@ -15,6 +15,29 @@
     font-family: android;
     src: url("/fonts/Roboto-Medium.ttf");
 }
+.msg{
+    position: absolute;
+    width: 95%;
+    height: 15vh;
+    top: 0;
+    z-index: 3;
+    background-color: #00000088;
+    border-radius: 0 0 1rem 1rem;
+    display: grid;
+    place-items: center;
+    font-size: x-large;
+    font-weight: bold;
+    transition: all .5s ease-in-out;
+    transform: translateY(-100%);
+    animation: 6s ease-in-out;
+    color: red;
+    padding: 2%;
+    text-align: center;
+}
+@keyframes showmsg {
+    0%,100%{ transform: translateY(-100%);}
+    10%,90%{ transform: translateY(0%);}
+}
 body{
     background-image: conic-gradient(var(--brand),var(--col3));
     // background-image: url("https://source.unsplash.com/random");
@@ -22,6 +45,7 @@ body{
     display: grid;
     place-items: center;
     overflow: hidden;
+    position: relative;
     main{
         display: flex;
         height: 85vh;
