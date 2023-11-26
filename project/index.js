@@ -127,6 +127,9 @@ app.get("/player",async (req,res) => {
     }
 });
 
+app.get("*",(req,res) => {
+    res.render("logerr.ejs")
+});
 
 conDb((err) => {
     if (!err) {
