@@ -35,13 +35,31 @@ async function getUserById(db,user) {
     if (!userdoc){
         return {"found":false};
     }
-    return {username : userdoc["username"],name : userdoc["name"],"found":true};
+    return {username : userdoc["username"],name : userdoc["name"],age:userdoc["age"],"found":true};
 }
 // console.log(readFiles("/mediadata/scandir.json"));
+
+const agemap = {
+    "R":18,
+    "Approved":0,
+    "PG-13":13,
+    "Not Rated":0,
+    "NC-17":17,
+    "X":21,
+    "A":18
+}
+const agemsg = "Please be aware that the movie you are about to watch is not recommended for your age group."+
+    " This movie may contain mature content, such as violence, language, or sexual content,"+
+    " that may be disturbing or inappropriate for viewers at your age.";
+
+function getagemsg(age,rating) {
+    return (agemap[rating] > age) ? agemsg : "";
+}
 
 module.exports = {
     getUserById:getUserById,
     readFiles:readFiles,
     addUser:addUser,
     getUserByInfo: getUserByInfo,
+    getagemsg: getagemsg,
 };

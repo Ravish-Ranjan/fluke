@@ -25,6 +25,32 @@ body{
     // height: 100vh;
     background-image: conic-gradient(var(--brand),var(--col3));
     font-size: 15px;
+    position: relative;
+    dialog{
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        padding: 2%;
+        background-color: var(--brand);
+        color: white;
+        width: 80%;
+        height: 60vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        text-transform: uppercase;
+        text-align: center;
+        p{
+            width: 70%;
+            font-size: 1.5em;
+        }
+        .btn{
+            text-transform: uppercase;
+            padding: 1%;
+        }
+    }
     video{
         width: 95%;
         height: 70vh;

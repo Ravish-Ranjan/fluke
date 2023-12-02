@@ -115,7 +115,9 @@ app.get("/player",async (req,res) => {
             if (data["found"]) {
                 let fid = req.query["fid"].toString();
                 let fdoc = await db.collection("media_info").findOne({_id:new ObjectId(fid)});
-                res.render("player.ejs",{data:JSON.stringify(fdoc)});
+                // console.log(data["age"]);
+                // console.log(fdoc["Rated"]);
+                res.render("player.ejs",{data:JSON.stringify(fdoc),agemsg:JSON.stringify(authen.getagemsg(data["age"],fdoc["Rated"]))});
             }
             else{
                 res.render("sisu.ejs")

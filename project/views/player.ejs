@@ -14,9 +14,23 @@
     <body>
         <video controls autoplay preload="metadata"></video>
         <div class="info"></div>
+        <dialog id="msg">
+            <p id="agemsg"></p>
+            <button type="button" class="btn btn-danger btn-block" onclick="msg.close(); closemsg();">I understand the risk</button>
+        </dialog>
         <script>
             let datastr = `<%- data %>`;
+            let agemsgstr = `<%- agemsg %>`;
             let data = JSON.parse(datastr);
+            let agemsg = JSON.parse(agemsgstr);
+            if (agemsg != ""){
+                $('#agemsg').text(agemsg);
+                document.getElementById("msg").showModal();
+                $("video").attr({"autoplay":""})
+            }
+            function closemsg() {
+                $('#msg').css({"display":"none"});
+            }
             let files = data["filepath"];
             let ht = "";
             $("video").attr({
@@ -40,7 +54,6 @@
             }
             ht += "<p>Your browser doesn't support this file format</p>"
             $("video").html(ht);
-            console.log(data);
             const infosdir = ["Language","Rated","Year","Runtime"];
             const infosexp = ["Genre","Actors","Director","Writer"];
             ht = "";

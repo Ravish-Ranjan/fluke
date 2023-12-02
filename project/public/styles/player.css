@@ -25,6 +25,32 @@ body {
   gap: 2rem;
   background-image: conic-gradient(var(--brand), var(--col3));
   font-size: 15px;
+  position: relative;
+}
+body dialog {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2%;
+  background-color: var(--brand);
+  color: white;
+  width: 80%;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  text-transform: uppercase;
+  text-align: center;
+}
+body dialog p {
+  width: 70%;
+  font-size: 1.5em;
+}
+body dialog .btn {
+  text-transform: uppercase;
+  padding: 1%;
 }
 body video {
   width: 95%;
