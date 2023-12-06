@@ -25,8 +25,9 @@
             let agemsg = JSON.parse(agemsgstr);
             if (agemsg != ""){
                 $('#agemsg').text(agemsg);
+                $('#msg').css({"display":"flex"});
                 document.getElementById("msg").showModal();
-                $("video").attr({"autoplay":""})
+                $("video").attr({"autoplay":"false"})
             }
             function closemsg() {
                 $('#msg').css({"display":"none"});

@@ -37,7 +37,7 @@ body dialog {
   color: white;
   width: 80%;
   height: 60vh;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
